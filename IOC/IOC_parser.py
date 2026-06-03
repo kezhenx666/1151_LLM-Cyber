@@ -10,7 +10,7 @@ from pypdf import PdfReader
 import tldextract
 
 
-IP_REGEX = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b")
+IP_REGEX = re.compile(r"(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?![\d.])")
 MD5_REGEX = re.compile(r"\b[a-fA-F0-9]{32}\b")
 SHA1_REGEX = re.compile(r"\b[a-fA-F0-9]{40}\b")
 SHA256_REGEX = re.compile(r"\b[a-fA-F0-9]{64}\b")
@@ -24,15 +24,41 @@ DOMAIN_REGEX = re.compile(
 TRAILING_PUNCT = ".,;:!?)>]}'\""
 COMMON_BENIGN_DOMAINS = {
     "adobe.com",
+    "ahnlab.com",
     "apple.com",
+    "blackberry.com",
+    "cafe24.com",
+    "cert.pl",
+    "cisa.gov",
+    "cisecurity.org",
     "github.com",
+    "githubusercontent.com",
+    "gmail.com",
     "google.com",
     "microsoft.com",
     "mozilla.org",
     "nist.gov",
+    "proofpoint.com",
     "twitter.com",
+    "ukr.net",
     "w3.org",
+    "wallup.net",
+    "welivesecurity.com",
     "youtube.com",
+}
+FILELIKE_SUFFIXES = {"properties", "zip", "phone"}
+FILELIKE_DOMAINS = {"sam.sa", "se.sa", "sy.sa", "win.phone"}
+SUSPICIOUS_PARSE_ARTIFACT_DOMAINS = {"embassy.us", "ioamazon.com"}
+PLACEHOLDER_IPS = {"1.1.1.1", "1.2.3.4", "2.2.2.2"}
+COMMON_BENIGN_IPS = {"3.228.54.173"}
+PLACEHOLDER_MARKERS = {
+    "*",
+    "[redacted",
+    "redacted",
+    "[base64",
+    "base64-encoded",
+    "[computer",
+    "[username",
 }
 
 
@@ -71,6 +97,63 @@ def context_window(text: str, start: int, end: int, size: int = 180) -> str:
     return collapse_ws(text[left:right])
 
 
+def is_placeholder_value(value: str) -> bool:
+    lowered = value.lower()
+    return any(marker in lowered for marker in PLACEHOLDER_MARKERS)
+
+
+def is_masked_match(text: str, start: int, end: int) -> bool:
+    nearby = text[max(0, start - 8): min(len(text), end + 8)].lower()
+    return "*" in nearby or "[redacted" in nearby
+
+
+def split_embedded_urls(value: str) -> list[str]:
+    starts = [match.start() for match in re.finditer(r"(?i)(?:https?|ftp)://", value)]
+    if len(starts) <= 1:
+        return [value]
+    starts.append(len(value))
+    return [value[starts[index]:starts[index + 1]] for index in range(len(starts) - 1)]
+
+
+def url_host(value: str) -> str:
+    return re.sub(r"^[a-zA-Z][a-zA-Z0-9+.-]*://", "", value).split("/", 1)[0].split(":", 1)[0]
+
+
+def should_keep_url(value: str) -> bool:
+    if is_placeholder_value(value):
+        return False
+    host = url_host(value)
+    domain = registered_domain(host)
+    if domain in COMMON_BENIGN_DOMAINS:
+        return False
+    return bool(domain)
+
+
+def should_keep_domain(value: str, domain: str, text: str, start: int, end: int) -> bool:
+    if not domain or domain in COMMON_BENIGN_DOMAINS:
+        return False
+    if domain in SUSPICIOUS_PARSE_ARTIFACT_DOMAINS:
+        return False
+    if is_placeholder_value(value) or is_masked_match(text, start, end):
+        return False
+    extracted = tldextract.extract(value)
+    if extracted.suffix in FILELIKE_SUFFIXES:
+        return False
+    if domain in FILELIKE_DOMAINS:
+        return False
+    if domain.startswith("com."):
+        return False
+    return True
+
+
+def should_keep_ipv4(value: str, context: str) -> bool:
+    if value in PLACEHOLDER_IPS:
+        return False
+    if value in COMMON_BENIGN_IPS:
+        return False
+    return is_public_ipv4(value)
+
+
 def read_pdf_text(pdf_path: Path) -> tuple[str, int, list[str]]:
     errors = []
     chunks = []
@@ -107,6 +190,14 @@ def registered_domain(value: str) -> str:
     return f"{extracted.domain}.{extracted.suffix}".lower()
 
 
+def normalize_source(source: str | list[str]) -> list[str]:
+    if isinstance(source, list):
+        parts = source
+    else:
+        parts = re.split(r"[+/,]", source)
+    return sorted({part.strip() for part in parts if part and part.strip()})
+
+
 def add_ioc(items: dict, ioc_type: str, value: str, section: str, context: str, source: str):
     normalized = value.lower() if ioc_type in {"domain", "url"} else value.upper() if ioc_type == "cve" else value
     key = (ioc_type, normalized)
@@ -118,7 +209,14 @@ def add_ioc(items: dict, ioc_type: str, value: str, section: str, context: str, 
             "section": section,
             "context": context,
             "confidence": 0.60,
-            "source": source,
+            "source": normalize_source(source),
+            "evidence": [
+                {
+                    "source": "regex_ioc_extractor",
+                    "section_title": section,
+                    "content": context,
+                }
+            ],
         }
 
 
@@ -127,17 +225,21 @@ def extract_iocs(text: str) -> list[dict]:
     found = {}
 
     for match in URL_REGEX.finditer(normalized_text):
-        value = clean_value(match.group(0))
-        add_ioc(found, "url", value, "unknown", context_window(normalized_text, match.start(), match.end()), "regex")
-        host = re.sub(r"^[a-zA-Z][a-zA-Z0-9+.-]*://", "", value).split("/", 1)[0].split(":", 1)[0]
-        domain = registered_domain(host)
-        if domain and domain not in COMMON_BENIGN_DOMAINS:
-            add_ioc(found, "domain", domain, "unknown", context_window(normalized_text, match.start(), match.end()), "url_host")
+        raw_value = clean_value(match.group(0))
+        for value in split_embedded_urls(raw_value):
+            value = clean_value(value)
+            if not should_keep_url(value):
+                continue
+            add_ioc(found, "url", value, "unknown", context_window(normalized_text, match.start(), match.end()), "regex")
+            domain = registered_domain(url_host(value))
+            if should_keep_domain(url_host(value), domain, normalized_text, match.start(), match.end()):
+                add_ioc(found, "domain", domain, "unknown", context_window(normalized_text, match.start(), match.end()), "url_host")
 
     for match in IP_REGEX.finditer(normalized_text):
         value = clean_value(match.group(0))
-        if is_public_ipv4(value):
-            add_ioc(found, "ipv4", value, "unknown", context_window(normalized_text, match.start(), match.end()), "regex+ipaddress")
+        context = context_window(normalized_text, match.start(), match.end())
+        if should_keep_ipv4(value, context):
+            add_ioc(found, "ipv4", value, "unknown", context, "regex+ipaddress")
 
     for pattern, ioc_type in [
         (SHA256_REGEX, "sha256"),
@@ -154,9 +256,8 @@ def extract_iocs(text: str) -> list[dict]:
     for match in DOMAIN_REGEX.finditer(normalized_text):
         value = clean_value(match.group(0))
         domain = registered_domain(value)
-        if not domain or domain in COMMON_BENIGN_DOMAINS:
-            continue
-        add_ioc(found, "domain", domain, "unknown", context_window(normalized_text, match.start(), match.end()), "regex+tldextract")
+        if should_keep_domain(value, domain, normalized_text, match.start(), match.end()):
+            add_ioc(found, "domain", domain, "unknown", context_window(normalized_text, match.start(), match.end()), "regex+tldextract")
 
     return sorted(found.values(), key=lambda item: (item["type"], item["normalized_value"]))
 
@@ -165,7 +266,48 @@ def load_metadata(log_path: Path) -> dict:
     if not log_path.exists():
         return {}
     with log_path.open(encoding="utf-8") as handle:
-        return {row["Saved File"]: row for row in csv.DictReader(handle)} 
+        return {row["Saved File"]: row for row in csv.DictReader(handle)}
+
+
+def summarize_iocs(iocs: list[dict]) -> dict[str, int]:
+    summary = {}
+    for item in iocs:
+        summary[item["type"]] = summary.get(item["type"], 0) + 1
+    return summary
+
+
+def build_report_json(pdf_path: Path, meta: dict, pages: int, text_length: int, errors: list[str], iocs: list[dict]) -> dict:
+    return {
+        "schema_version": "cti-enriched-lite-v1",
+        "report_id": pdf_path.stem,
+        "report_title": meta.get("Title", pdf_path.stem),
+        "source_type": "pdf",
+        "source": meta.get("Source", ""),
+        "year": meta.get("Year", ""),
+        "original_link": meta.get("Link", ""),
+        "pdf_file": str(pdf_path),
+        "page_count": pages,
+        "text_length": text_length,
+        "extraction_errors": errors,
+        "sections": [],
+        "iocs": iocs,
+        "ioc_summary": summarize_iocs(iocs),
+        "threat_context": {},
+        "merge_notes": {
+            "base_json": "ioc_extractor_json",
+            "enrichment_json": None,
+            "dedup_key": ["type", "normalized_value"],
+            "schema_policy": (
+                "Raw extractor output uses the same enriched-compatible schema as "
+                "the final merged output. Parser/layout enrichment can later fill "
+                "sections, stronger evidence, threat_context, and adjusted confidence."
+            ),
+            "llm_usage": (
+                "Use iocs as detection candidates and evidence/context as grounding "
+                "text for later LLM validation or rule generation."
+            ),
+        },
+    }
 
 
 def main():
@@ -183,22 +325,14 @@ def main():
         text, pages, errors = read_pdf_text(pdf_path)
         iocs = extract_iocs(text)
         meta = metadata.get(pdf_path.name, {})
-        report = {
-            "report_id": pdf_path.stem,
-            "report_title": meta.get("Title", pdf_path.stem),
-            "source_type": "pdf",
-            "source": meta.get("Source", ""),
-            "year": meta.get("Year", ""),
-            "original_link": meta.get("Link", ""),
-            "pdf_file": str(pdf_path),
-            "page_count": pages,
-            "text_length": len(text),
-            "extraction_errors": errors,
-            "iocs": iocs,
-            "ioc_summary": {},
-        }
-        for item in iocs:
-            report["ioc_summary"][item["type"]] = report["ioc_summary"].get(item["type"], 0) + 1
+        report = build_report_json(
+            pdf_path=pdf_path,
+            meta=meta,
+            pages=pages,
+            text_length=len(text),
+            errors=errors,
+            iocs=iocs,
+        )
 
         out_path = args.out_dir / f"{pdf_path.stem}.iocs.json"
         out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")

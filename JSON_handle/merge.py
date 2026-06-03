@@ -380,7 +380,7 @@ def merge_one(
     sections = build_sections(elements)
     iocs = enrich_iocs(ioc_json, sections)
 
-    return {
+    merged = {
         "schema_version": "cti-enriched-lite-v1",
         "report_id": ioc_json.get("report_id"),
         "report_title": (
@@ -389,7 +389,13 @@ def merge_one(
             or parser_json.get("file name")
         ),
         "source_type": ioc_json.get("source_type", "pdf"),
+        "source": ioc_json.get("source", ""),
+        "year": ioc_json.get("year", ""),
+        "original_link": ioc_json.get("original_link", ""),
         "pdf_file": ioc_json.get("pdf_file") or parser_json.get("file name"),
+        "page_count": ioc_json.get("page_count"),
+        "text_length": ioc_json.get("text_length"),
+        "extraction_errors": ioc_json.get("extraction_errors", []),
         "sections": sections,
         "iocs": iocs,
         "ioc_summary": summarize_iocs(iocs),
@@ -413,6 +419,8 @@ def merge_one(
             ),
         },
     }
+
+    return merged
 
 
 def find_parser_file(ioc_file: Path, parser_dir: Path) -> Path | None:
