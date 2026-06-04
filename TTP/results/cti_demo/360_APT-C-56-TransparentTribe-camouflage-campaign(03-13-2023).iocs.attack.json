@@ -1,0 +1,1382 @@
+{
+  "schema_version": "attack-mapping-v1",
+  "report_id": "360_APT-C-56-TransparentTribe-camouflage-campaign(03-13-2023)",
+  "report_title": "360_APT-C-56-TransparentTribe-camouflage-campaign(03-13-2023)",
+  "source_type": "pdf",
+  "provider": "ollama",
+  "top_k": 10,
+  "ttp_mappings": [
+    {
+      "technique_id": "T1070.004",
+      "technique_name": "File Deletion",
+      "tactics": [
+        "stealth"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        {
+          "source": "section",
+          "section_title": "2.2 Dropper",
+          "chunk_index": 1,
+          "text": "delete it and write it again"
+        }
+      ],
+      "reasons": [
+        "The dropper explicitly deletes a file before rewriting it."
+      ],
+      "source": "rag+ollama"
+    },
+    {
+      "technique_id": "T1083",
+      "technique_name": "File and Directory Discovery",
+      "tactics": [
+        "discovery"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "source": "section",
+          "section_title": "2.2 Dropper",
+          "chunk_index": 1,
+          "text": "determine whether a zip file exists"
+        }
+      ],
+      "reasons": [
+        "The dropper checks for the existence of a zip file."
+      ],
+      "source": "rag+ollama"
+    },
+    {
+      "technique_id": "T1566.001",
+      "technique_name": "Spearphishing Attachment",
+      "tactics": [
+        "initial-access"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        {
+          "source": "section",
+          "section_title": "Analysis of APT-C-56 (Transparent Tribe) camouflage resume attack campaign",
+          "chunk_index": 2,
+          "text": "sample used the bait documentation to eventually release its exclusive Trojan, CrimsonRAT"
+        }
+      ],
+      "reasons": [
+        "Evidence indicates the use of bait documentation that eventually released CrimsonRAT, implying a malicious attachment delivered via spearphishing."
+      ],
+      "source": "rag+ollama"
+    },
+    {
+      "technique_id": "T1683.001",
+      "technique_name": "Written Content",
+      "tactics": [
+        "resource-development"
+      ],
+      "confidence": 0.92,
+      "evidence": [
+        {
+          "source": "section",
+          "section_title": "1. Analysis of attack activities",
+          "chunk_index": 1,
+          "text": "Attack campaigns using decoy documents that disguise resumes."
+        }
+      ],
+      "reasons": [
+        "Evidence explicitly mentions decoy documents disguised as resumes, which is a form of written content created to support malicious operations."
+      ],
+      "source": "rag+ollama"
+    }
+  ],
+  "mapping_summary": {
+    "evidence_count": 5,
+    "technique_count": 4,
+    "tactic_counts": {
+      "discovery": 1,
+      "initial-access": 1,
+      "resource-development": 1,
+      "stealth": 1
+    },
+    "validation_error_count": 0
+  },
+  "mapping_records": [
+    {
+      "evidence": "mp.weixin.qq.com/s/xU7b3m-L2OlAi2bU7nBj0A Included in the collection #APT 87 piece #南亚地区 26 piece #APT-C-56 Transparent Tribe 7 piece APT-C-56 Transparent Tribe APT-C-56 (Transparent Tribe), also known as Transparent Tribe, APT36, ProjectM, C-Major, is an APT organization with a South Asian background, which has long targeted attacks on the politics and military of neighboring countries and regions (especially India), and has developed its own exclusive Trojan horse CrimsonRAT, and has also been found to widely spread USB worms. It has been targeting India's government, public sector, and various industries including but not limited to healthcare, power, finance, manufacturing, etc. to maintain a high level of information theft activities. Earlier this year, Transparent Tribe and SideCopy were found to be using the same infrastructure and using the same themes to target similar targets, using smuggling intelligence-related decoys to camouflage Indian Defense Ministry emails to launch frequent attacks against India. We also found an attack campaign targeting the foreign trade industry using backlinks. Recently, the 360 Advanced Threat Institute detected a sample of suspected Transpa",
+      "retrieved_candidates": [
+        {
+          "technique_id": "T1566.001",
+          "name": "Spearphishing Attachment",
+          "retrieval_score": 0.175082,
+          "tactics": [
+            "initial-access"
+          ],
+          "description": "Adversaries may send spearphishing emails with a malicious attachment in an attempt to gain access to victim systems. Spearphishing attachment is a specific variant of spearphishing. Spearphishing attachment is different from other forms of spearphishing in that it employs the use of malware attached to an email. All forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this scenario, adversaries attach a file to the spearphishing email and usually rely upon [User Execution](https://attack.mitre.org/techniques/T1204) to gain execution.(Citation: Unit 42 DarkHydrus July 2018) Spearphishing may also involve social engineering techniques, such as posing as a trusted source. There are many options for the attachment such as Microsoft Office documents, executables, PDFs, or archived files. Upon opening the attachm...",
+          "known_examples": [
+            "This attack begins with a spear phishing attack through a targeted email campaign. Over 80 files were sent to 40 email accounts within the organization, within the span of about an hour. The email contains Microsoft Excel attachments with malicious macros",
+            "If the attack progresses, the user will be taken to the download of an MS Word document containing malicious macros that has very low detection rate at the moment of this campaign delivery. From a metadata standpoint, the document does not include any specific signal or characteristic that would help us tracking documents from the same author, as shown in Figure 6",
+            "ESTSecurity inspected a malicious lure document discussing North Korean defectors. This lure document contained a UPX packed binary that reached out to wave[.]posadadesantiago[.]com. Based upon their report we believe SHA256: 252d1b7a379f97fddd691880c1cf93eaeb2a5e5572e92a25240b75953c88736c, either is or is strikingly similar to the document discussed in their blog post based on these similarities"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1566/001"
+        },
+        {
+          "technique_id": "T1608.004",
+          "name": "Drive-by Target",
+          "retrieval_score": 0.159776,
+          "tactics": [
+            "resource-development"
+          ],
+          "description": "Adversaries may prepare an operational environment to infect systems that visit a website over the normal course of browsing. Endpoint systems may be compromised through browsing to adversary controlled sites, as in [Drive-by Compromise](https://attack.mitre.org/techniques/T1189). In such cases, the user's web browser is typically targeted for exploitation (often not requiring any extra user interaction once landing on the site), but adversaries may also set up websites for non-exploitation behavior such as [Application Access Token](https://attack.mitre.org/techniques/T1550/001). Prior to [Drive-by Compromise](https://attack.mitre.org/techniques/T1189), adversaries must stage resources needed to deliver that exploit to users who browse to an adversary controlled site. Drive-by content can be staged on adversary controlled infrastructure that has been acquired ([Acquire Infrastructure...",
+          "known_examples": [
+            "Our latest Transparent Tribe research confirms that the group continues to create malicious domains mimicking defense-related entities as a core component of their operations. The victim is encouraged to click on an embedded URL hosted on sharingmymedia[.]com, which then downloads ObliqueRAT, the trojan discovered by Talos in 2020 associated with threat activity targeting entities in South Asia. We cannot confirm how the maldocs were delivered to victims, but we suspect they were probably sent as attachments to phishing emails based on previous threat actor behavior and the targeted nature of this particular lure. Security researchers previously discovered Transparent Tribe using sharingmymedia[.]com to host Android malware targeting Indian military and defense personnel.Figure 1: Maldoc masquerading as a congratulatory notice from CLAWS. In such cases, adversaries would deliver phishing maldocs to targets containing a malicious VBA macro that extracted either the CrimsonRAT executable or a ZIP archive embedded in the maldoc. The macro dropped the implant to the disk, setting up persistence mechanisms and eventually executing the payload on the infected endpoint. For example, attackers leveraging ObliqueRAT started hosting their malicious payloads on compromised websites instead of embedding the malware in the maldoc. Figure 2 shows the attackers' use of HTTrack, a free website copier program, to duplicate a legitimate website to use for their own malicious purposes. These examples highlight Transparent Tribe's heavy reliance on social engineering as a core TTP and the group's efforts to make their operations appear as legitimate as possible.Figure 2: Fake website cloned using HTTrack on May 29, 2020. The malicious domain prompts the victim to enter their name and email address to sign up and download a seemingly important \"guide on pay and allowance",
+            "The websites contain numerous articles and content to make them seem legitimate; in some cases the websites have over 10,000 individual news articles. Volexity has found the content is largely scraped and reposted in full from various other legitimate online news outlets. This appears to be done in an automated fashion and most likely through WordPress plugins. Numerous posted articles and images can be directly tracked back to other online blogs and newspapers; sometimes the byline or even watermark in images show directly where the article was sourced. In some cases, only a small number of pages on the site contains malicious code; in other cases, the profiling code is pervasive",
+            "Dragonfly has compromised websites to redirect traffic and to host exploit kits."
+          ],
+          "url": "https://attack.mitre.org/techniques/T1608/004"
+        },
+        {
+          "technique_id": "T1566.002",
+          "name": "Spearphishing Link",
+          "retrieval_score": 0.134144,
+          "tactics": [
+            "initial-access"
+          ],
+          "description": "Adversaries may send spearphishing emails with a malicious link in an attempt to gain access to victim systems. Spearphishing with a link is a specific variant of spearphishing. It is different from other forms of spearphishing in that it employs the use of links to download malware contained in email, instead of attaching malicious files to the email itself, to avoid defenses that may inspect email attachments. Spearphishing may also involve social engineering techniques, such as posing as a trusted source. All forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this case, the malicious emails contain links. Generally, the links will be accompanied by social engineering text and require the user to actively click or copy and paste a URL into a browser, leveraging [User Execution](https://attack.mitre.org/t...",
+          "known_examples": [
+            "In December 2019, another version of the AppleJeus malware was identified on Twitter by a cybersecurity company based on many similarities to the original AppleJeus malware. In contrast, open-source reporting stated that the Windows version might have been downloaded via instant messaging service Telegram, as it was found in a “Telegram Downloads” folder on an unnamed victim",
+            "Although, the use of target names with actuating themes is not new to this group, there has been a significant uptick in the number of emails received and this campaign has been persistently active for the past few weeks",
+            "We named Lazarus the most active group of 2020. We’ve observed numerous activities by this notorious APT group targeting various industries. The group has changed target depending on the primary objective. Google TAG has recently published a post about a campaign by Lazarus targeting security researchers. We have seen Lazarus attack various industries using this malware cluster before. In mid-2020, we realized that Lazarus was launching attacks on the defense industry using the ThreatNeedle cluster, an advanced malware cluster of Manuscrypt (a.k.a. NukeSped). While investigating this activity, we were able to observe the complete life cycle of an attack, uncovering more technical details and links to the group’s other campaigns"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1566/002"
+        },
+        {
+          "technique_id": "T1005",
+          "name": "Data from Local System",
+          "retrieval_score": 0.124372,
+          "tactics": [
+            "collection"
+          ],
+          "description": "Adversaries may search local system sources, such as file systems, configuration files, local databases, virtual machine files, or process memory, to find files of interest and sensitive data prior to Exfiltration. Adversaries may do this using a [Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059), such as [cmd](https://attack.mitre.org/software/S0106) as well as a [Network Device CLI](https://attack.mitre.org/techniques/T1059/008), which have functionality to interact with the file system to gather information.(Citation: show_run_config_cmd_cisco) Adversaries may also use [Automated Collection](https://attack.mitre.org/techniques/T1119) on the local system.",
+          "known_examples": [
+            "Endpoint Protection . The Trojan.Hydraq Incident . It has been about a week since news of the mysterious Hydraq Trojan (also known as Aurora) attack broke with the unveiling of a threat by Google to pull its operations out of China. Although concrete details of the attacks are not yet public, Google made reference to a number of Gmail accounts that were compromised during or after the attacks. Anatomy of the Attack For a number of years targeted attacks have nearly always followed the same modus operandi. In the more sophisticated attacks, the attacker will use a new zero day vulnerability, as obviously this will have a greater success rate. In this attack a PDF file was used to exploit the Adobe Acrobat, Reader, and Flash Player Remote Code Execution Vulnerability (CVE-2009-1862/BID35759). This PDF installed a Trojan horse which was an earlier version of the current Trojan.Hydraq. This means the remote attacker has the ability to see in real time any user interface activity as if they were sitting right next to the user. As described in the previously posted blog (Hydraq - An Attack of Mythical Proportions), an unpatched Internet Explorer vulnerability (BID 37815) was used as one of the propagation vectors for this particular Trojan.Hydraq attack. This security hole allows remote exploitation, which means that attackers can run any malicious code of their liking on a victim’s machine by taking advantage of the vulnerability. The number of computers we have observed being attacked or have been attacked is low as borne out by our field detection statistics. Prevention &amp; Mitigation Trojan.Hydraq has been known to be spread through specially crafted PDF files and also through malicious Web sites",
+            "Capable of stealing documents sent to the printer queue. Data gathered for victim recon includes the backup list for Apple mobile devices. Steals written CD images. Capable of stealing files previously seen on removable drives once they are available again. Steals Internet Explorer, Netscape Navigator, FireFox and RealNetworks cookies",
+            "In the analyzed sample the RAT component was named “BotDLL[.]dll”. It has some typical RAT functionality such as command shell, video recording of the screen, remote desktop, port forwarding, and file system access"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1005"
+        },
+        {
+          "technique_id": "T1204.002",
+          "name": "Malicious File",
+          "retrieval_score": 0.089099,
+          "tactics": [
+            "execution"
+          ],
+          "description": "An adversary may rely upon a user opening a malicious file in order to gain execution. Users may be subjected to social engineering to get them to open a file that will lead to code execution. This user action will typically be observed as follow-on behavior from [Spearphishing Attachment](https://attack.mitre.org/techniques/T1566/001). Adversaries may use several types of files that require a user to execute them, including .doc, .pdf, .xls, .rtf, .scr, .exe, .lnk, .pif, .cpl, .reg, and .iso.(Citation: Mandiant Trojanized Windows 10) Adversaries may employ various forms of [Masquerading](https://attack.mitre.org/techniques/T1036) and [Obfuscated Files or Information](https://attack.mitre.org/techniques/T1027) to increase the likelihood that a user will open and successfully execute a malicious file. These methods may include using a familiar naming convention and/or password protecti...",
+          "known_examples": [
+            "TA551 has distributed different families of malware, including Ursnif (Gozi/ISFB), Valak and IcedID. TA551 malspam spoofs legitimate email chains based on data retrieved from previously infected Windows hosts. This is a generic statement asking the recipient to open an attached ZIP archive using the supplied password. For example, if the spoofed sender is someone@companyname.com, the ZIP attachment would be named companyname.zip. In 2020, we also started seeing emails with info.zip or request.zip as the attached ZIP archive names. These password-protected ZIP attachments contain a Word document with macros to install malware. File names for the extracted Word documents follow noticeable patterns that have evolved as this campaign has progressed. URLs generated by the associated Word macros also follow noticeable patterns that have also evolved as this campaign has progressed",
+            "An uptick in activity from GRIM SPIDER, a subgroup of the criminal enterprise CrowdStrike Intelligence tracks as WIZARD SPIDER, has led to the identification of consistent actions employed to carry out their attacks. As part of their initial compromise — usually as a download from a spam email — they gain a foothold with their modular TrickBot malware, which was developed and is principally operated by WIZARD SPIDER. Once TrickBot is executed, new enumeration modules are downloaded onto the compromised machine to facilitate WIZARD SPIDER’s spread in search of credentials with the aim of gaining access to the domain controller. The criminal actors use RDP to perform lateral movement and explore the victim environment, with an end result of gaining access to the domain controller. Once this access has been achieved, GRIM SPIDER is able to deploy the Ryuk ransomware to the entire network",
+            "In this campaign, the group sent spear phishing emails containing malicious documents that led to the installation of the UPPERCUT backdoor. Part of this blog post will discuss the updates and differences we have observed across multiple versions of this backdoor"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1204/002"
+        },
+        {
+          "technique_id": "T1569.002",
+          "name": "Service Execution",
+          "retrieval_score": 0.089015,
+          "tactics": [
+            "execution"
+          ],
+          "description": "Adversaries may abuse the Windows service control manager to execute malicious commands or payloads. The Windows service control manager (<code>services.exe</code>) is an interface to manage and manipulate services.(Citation: Microsoft Service Control Manager) The service control manager is accessible to users via GUI components as well as system utilities such as <code>sc.exe</code> and [Net](https://attack.mitre.org/software/S0039). [PsExec](https://attack.mitre.org/software/S0029) can also be used to execute commands or payloads via a temporary Windows service created through the service control manager API.(Citation: Russinovich Sysinternals) Tools such as [PsExec](https://attack.mitre.org/software/S0029) and <code>sc.exe</code> can accept remote servers as arguments and may be used to conduct remote execution. Adversaries may leverage these mechanisms to execute malicious content...",
+          "known_examples": [
+            "Along the way, HermeticWiper’s more mundane operations provide us with further IOCs to monitor for. These include the momentary creation of the abused driver as well as a system service. It also modifies several registry keys, including setting the SYSTEM\\CurrentControlSet\\Control\\CrashControl CrashDumpEnabled key to 0, effectively disabling crash dumps before the abused driver’s execution starts",
+            "In past attacks, the Ragnar Locker group has used exploits of managed service providers or attacks on Windows Remote Desktop Protocol (RDP) connections to gain a foothold on targeted networks",
+            "If it is executed with the \"help\" parameter, it will install a service to execute itself as a service. This parameter is used by the trojanized installer. This has a notable side effect: if rmaserv.exe is executed isolated on a sandbox (so without the parameter), the service is not created. Consequently, the execution won't do anything and the dynamic analysis will be skewed. The second main feature is the service. This service has two features. First, it will launch the winprint32.exe executable (C2 contact module) and then it will wait for an event. This event is the mechanism used by the C2 contact module to alert the service executable to perform the cleaning of all components"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1569/002"
+        },
+        {
+          "technique_id": "T1204.001",
+          "name": "Malicious Link",
+          "retrieval_score": 0.088241,
+          "tactics": [
+            "execution"
+          ],
+          "description": "An adversary may rely upon a user clicking a malicious link in order to gain execution. Users may be subjected to social engineering to get them to click on a link that will lead to code execution. This user action will typically be observed as follow-on behavior from [Spearphishing Link](https://attack.mitre.org/techniques/T1566/002). Clicking on a link may also lead to other execution techniques such as exploitation of a browser or application vulnerability via [Exploitation for Client Execution](https://attack.mitre.org/techniques/T1203). Links may also lead users to download files that require execution via [Malicious File](https://attack.mitre.org/techniques/T1204/002).",
+          "known_examples": [
+            "The link “Check” led to a Google Docs page, which contained a link that redirected to a ZIP file. The ZIP file was hosted on a likely compromised SharePoint account and contained Domenus VBS, which downloads Harpy from https[:]//fashionableeder[.]com/info. At one victim, CARBON SPIDER subsequently deployed the aforementioned custom PS Sekur stager and profiled the Active Directory environment using the utility ADFind",
+            "This activity has TTP and targeting overlap with previous activity, suspected to be APT29. The 2018 and 2016 LNK files are similar in structure and code, and contain significant metadata overlap, including the MAC address of the system on which the LNK was created",
+            "Between August 2 and 4, the actor sent targeted spearphishing emails containing malicious URLs linking to documents to multiple defense contractors"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1204/001"
+        },
+        {
+          "technique_id": "T1199",
+          "name": "Trusted Relationship",
+          "retrieval_score": 0.078846,
+          "tactics": [
+            "initial-access"
+          ],
+          "description": "Adversaries may breach or otherwise leverage organizations who have access to intended victims. Access through trusted third party relationship abuses an existing connection that may not be protected or receives less scrutiny than standard mechanisms of gaining access to a network. Organizations often grant elevated access to second or third-party external providers in order to allow them to manage internal systems as well as cloud-based environments. Some examples of these relationships include IT services contractors, managed security providers, infrastructure contractors (e.g. HVAC, elevators, physical security). The third-party provider's access may be intended to be limited to the infrastructure being maintained, but may exist on the same network as the rest of the enterprise. As such, [Valid Accounts](https://attack.mitre.org/techniques/T1078) used by the other party for access...",
+          "known_examples": [
+            "An official website of the United States government . Here’s how you know . Official websites use .gov A .gov website belongs to an official government organization in the United States. Secure .gov websites use HTTPS A lock (LockA locked padlock) or https:// means you’ve safely connected to the .gov website. O’Reilly of the Defense Criminal Investigative Service (DCIS) of the U.S. Among other things, Zhu and Zhang registered IT infrastructure that the APT10 Group used for its intrusions and engaged in illegal hacking operations. The indictment alleges that the defendants were part of a group that hacked computers in at least a dozen countries and gave China’s intelligence service access to sensitive business information,” said Deputy Attorney General Rosenstein. It's going to take all of us working together to protect our economic security and our way of life, because the American people deserve no less. The APT10 Group used some of the same online facilities to initiate, facilitate and execute its campaigns during the conspiracy. Earlier, beginning in or about 2006, members of the APT10 Group, including Zhu and Zhang, engaged in an intrusion campaign to obtain unauthorized access to the computers and computer networks of more than 45 technology companies and U.S. To avoid antivirus detection, the malware was installed using malicious files that masqueraded as legitimate files associated with the victim computer’s operating system. Such malware enabled members of the APT10 Group to monitor victims’ computers remotely and steal user credentials",
+            "APT10 has targeted or compromised manufacturing companies in India, Japan and Northern Europe; a mining company in South America; and multiple IT service providers worldwide. Traditional and Novel Methods . This recent APT10 activity has included both traditional spear phishing and access to victim’s networks through service providers. In addition to the spear phishes, FireEye ISIGHT Intelligence has observed APT10 accessing victims through global service providers. Service providers have significant access to customer networks, enabling an attacker who had compromised a service provider to move laterally into the network of the service provider’s customer. In addition, web traffic between a service provider’s customer and a service provider is likely to be viewed as benign by network defenders at the customer, allowing the attacker to exfiltrate data stealthily. A notable instance of this observed by FireEye involved a SOGU backdoor that was set to communicate with its C2 through a server belonging to the victim’s service provider. The actor then tested connectivity to an IP managed by the victim’s service provider. Once connectivity to the service provider IP was verified, the actor established the service provider IP as a proxy for the victim’s SOGU backdoor. This effectively routes SOGU malware traffic through the victim’s service provider, which likely indicates a foothold on the service provider’s network. Their abuse of access to service provider networks demonstrates that peripheral organizations continue to be of interest to a malicious actor – especially those seeking alternative angles of attack",
+            "CrowdStrike also identified a connection between StellarParticle-related campaigns and the abuse of Microsoft Cloud Solution Partners’ O365 tenants. This threat actor abused access to accounts in the Cloud Solution Partner’s environment with legitimate delegated administrative privileges to then gain access to several customers’ O365 environments"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1199"
+        },
+        {
+          "technique_id": "T1566",
+          "name": "Phishing",
+          "retrieval_score": 0.078435,
+          "tactics": [
+            "initial-access"
+          ],
+          "description": "Adversaries may send phishing messages to gain access to victim systems. All forms of phishing are electronically delivered social engineering. Phishing can be targeted, known as spearphishing. In spearphishing, a specific individual, company, or industry will be targeted by the adversary. More generally, adversaries can conduct non-targeted phishing, such as in mass malware spam campaigns. Adversaries may send victims emails containing malicious attachments or links, typically to execute malicious code on victim systems. Phishing may also be conducted via third-party services, like social media platforms. Phishing may also involve social engineering techniques, such as posing as a trusted source, as well as evasive techniques such as removing or manipulating emails or metadata/headers from compromised accounts being abused to send messages (e.g., [Email Hiding Rules](https://attack.m...",
+          "known_examples": [
+            "Since then, the threat actors have expanded delivery to include malicious spam campaigns, RDP attacks, and other attack vectors. In other reports, threat actors breached at least three managed service providers (MSPs) and used the access to deploy REvil to the MSPs' customers",
+            "BazarLoader is Windows-based malware spread through various methods involving email",
+            "The first spear phish from group “Admin@338” was sent to a foreign government in the Asian Pacific region on March 10, 2014 – just two days after the flight disappeared. The threat actors sent a spear-phishing email with an attachment titled, “Malaysian Airlines MH370.doc” (MD5: 9c43a26fe4538a373b7f5921055ddeae). Although threat actors often include some sort of “decoy content” upon successful exploitation (that is, a document representing what the recipient expected to open), in this case, the user is simply shown a blank document."
+          ],
+          "url": "https://attack.mitre.org/techniques/T1566"
+        },
+        {
+          "technique_id": "T1497.001",
+          "name": "System Checks",
+          "retrieval_score": 0.077851,
+          "tactics": [
+            "stealth",
+            "discovery"
+          ],
+          "description": "Adversaries may employ various system checks to detect and avoid virtualization and analysis environments. This may include changing behaviors based on the results of checks for the presence of artifacts indicative of a virtual machine environment (VME) or sandbox. If the adversary detects a VME, they may alter their malware to disengage from the victim or conceal the core functions of the implant. They may also search for VME artifacts before dropping secondary or additional payloads. Adversaries may use the information learned from [Virtualization/Sandbox Evasion](https://attack.mitre.org/techniques/T1497) during automated discovery to shape follow-on behaviors.(Citation: Deloitte Environment Awareness) Specific checks will vary based on the target and/or adversary, but may involve behaviors such as [Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047), [Po...",
+          "known_examples": [
+            "The name EvilBunny is derived from debug information embedded in the malware’s dropper. Furthermore, the specified piece incorporates a Lua 5.1 interpreter, which allows the malware to execute Lua scripts and change its behavior at runtime. The dropper will place the EvilBunny malware under %APPDATA%\\Perf Manager\\ or %WINDIR%\\msapps\\; depending whether the dropper is running with administrative privileges or not. Also, the malware will generate numerous files to help its execution and frequently reply back to the C&amp;C with status messages. Similar to its dropper, the binary seeks to evade sandboxes. Next to that, the main thread also runs sub threads to maintain log files the malware creates during execution and to keep track of the overall system load the malware creates. The worker threads are internally dubbed ‘hearer’, which is believed to stand for ‘listener’. It can be concluded thereafter that the malware authors were no English native speakers. The main action of the malware is carried out in the main thread, which parses commands and executes Lua scripts, provided by the worker threads via command files. Each hearer has a dedicated method to receive instructions which is either separately via HTTP from the server, aggregated through a downloaded data file or as tasks to be configured as scheduled tasks. In general this is a rather uncommon technique, but it has been observed before, especially in connection with some adware variants",
+            "The C# variant of RogueRobin attempts to detect if it is executing in a sandbox environment using the same commands as in the PowerShell variant of RogueRobin. The series of commands, as seen in Table 2, include checks for virtualized environments, low memory, and processor counts, in addition to checks for common analysis tools running on the system. The Trojan also checks to see if a debugger is attached to its processes and will exit if it detects the presence of a debugger",
+            "This Unix binary is widely used by many malware families to determine the device’s unique ID (for campaign tracking), usually in the form of the machine’s serial number. This may or may not be hashed with another utility (e.g. md5) before being sent to the C2. To facilitate anti-analysis and evasion, ioreg is also used by some threat actors to determine whether the device is running in a virtual environment"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1497/001"
+        }
+      ],
+      "llm_provider": "ollama",
+      "raw_llm_result": {
+        "selected_techniques": [],
+        "rejected_candidates": [
+          {
+            "technique_id": "T1566.001",
+            "reason": "Evidence does not describe the use of spearphishing emails with malicious attachments."
+          },
+          {
+            "technique_id": "T1608.004",
+            "reason": "Evidence does not describe the use of drive‑by target websites to deliver malware."
+          },
+          {
+            "technique_id": "T1566.002",
+            "reason": "Evidence does not describe the use of spearphishing emails containing malicious links."
+          },
+          {
+            "technique_id": "T1005",
+            "reason": "Evidence does not describe the collection of data from the local system."
+          },
+          {
+            "technique_id": "T1204.002",
+            "reason": "Evidence does not describe the execution of a malicious file via user action."
+          },
+          {
+            "technique_id": "T1569.002",
+            "reason": "Evidence does not describe the abuse of Windows services for execution."
+          },
+          {
+            "technique_id": "T1204.001",
+            "reason": "Evidence does not describe the execution of a malicious link via user action."
+          },
+          {
+            "technique_id": "T1199",
+            "reason": "Evidence does not describe the exploitation of a trusted third‑party relationship."
+          },
+          {
+            "technique_id": "T1566",
+            "reason": "Evidence does not describe the use of phishing emails."
+          },
+          {
+            "technique_id": "T1497.001",
+            "reason": "Evidence does not describe system checks for virtualization or sandbox evasion."
+          }
+        ]
+      },
+      "selected_techniques": [],
+      "rejected_candidates": [
+        {
+          "technique_id": "T1566.001",
+          "reason": "Evidence does not describe the use of spearphishing emails with malicious attachments."
+        },
+        {
+          "technique_id": "T1608.004",
+          "reason": "Evidence does not describe the use of drive‑by target websites to deliver malware."
+        },
+        {
+          "technique_id": "T1566.002",
+          "reason": "Evidence does not describe the use of spearphishing emails containing malicious links."
+        },
+        {
+          "technique_id": "T1005",
+          "reason": "Evidence does not describe the collection of data from the local system."
+        },
+        {
+          "technique_id": "T1204.002",
+          "reason": "Evidence does not describe the execution of a malicious file via user action."
+        },
+        {
+          "technique_id": "T1569.002",
+          "reason": "Evidence does not describe the abuse of Windows services for execution."
+        },
+        {
+          "technique_id": "T1204.001",
+          "reason": "Evidence does not describe the execution of a malicious link via user action."
+        },
+        {
+          "technique_id": "T1199",
+          "reason": "Evidence does not describe the exploitation of a trusted third‑party relationship."
+        },
+        {
+          "technique_id": "T1566",
+          "reason": "Evidence does not describe the use of phishing emails."
+        },
+        {
+          "technique_id": "T1497.001",
+          "reason": "Evidence does not describe system checks for virtualization or sandbox evasion."
+        }
+      ],
+      "validation_errors": [],
+      "evidence_metadata": {
+        "source": "section",
+        "section_title": "Analysis of APT-C-56 (Transparent Tribe) camouflage resume attack campaign",
+        "chunk_index": 1,
+        "text": "mp.weixin.qq.com/s/xU7b3m-L2OlAi2bU7nBj0A Included in the collection #APT 87 piece #南亚地区 26 piece #APT-C-56 Transparent Tribe 7 piece APT-C-56 Transparent Tribe APT-C-56 (Transparent Tribe), also known as Transparent Tribe, APT36, ProjectM, C-Major, is an APT organization with a South Asian background, which has long targeted attacks on the politics and military of neighboring countries and regions (especially India), and has developed its own exclusive Trojan horse CrimsonRAT, and has also been found to widely spread USB worms. It has been targeting India's government, public sector, and various industries including but not limited to healthcare, power, finance, manufacturing, etc. to maintain a high level of information theft activities. Earlier this year, Transparent Tribe and SideCopy were found to be using the same infrastructure and using the same themes to target similar targets, using smuggling intelligence-related decoys to camouflage Indian Defense Ministry emails to launch frequent attacks against India. We also found an attack campaign targeting the foreign trade industry using backlinks. Recently, the 360 Advanced Threat Institute detected a sample of suspected Transpa"
+      },
+      "runtime_seconds": 30.496
+    },
+    {
+      "evidence": "tack campaign targeting the foreign trade industry using backlinks. Recently, the 360 Advanced Threat Institute detected a sample of suspected Transparent Tribe's attack activity. We speculate that the previous operation went undetected, and the sample used the bait documentation to eventually release its exclusive Trojan, CrimsonRAT.",
+      "retrieved_candidates": [
+        {
+          "technique_id": "T1566.001",
+          "name": "Spearphishing Attachment",
+          "retrieval_score": 0.125825,
+          "tactics": [
+            "initial-access"
+          ],
+          "description": "Adversaries may send spearphishing emails with a malicious attachment in an attempt to gain access to victim systems. Spearphishing attachment is a specific variant of spearphishing. Spearphishing attachment is different from other forms of spearphishing in that it employs the use of malware attached to an email. All forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this scenario, adversaries attach a file to the spearphishing email and usually rely upon [User Execution](https://attack.mitre.org/techniques/T1204) to gain execution.(Citation: Unit 42 DarkHydrus July 2018) Spearphishing may also involve social engineering techniques, such as posing as a trusted source. There are many options for the attachment such as Microsoft Office documents, executables, PDFs, or archived files. Upon opening the attachm...",
+          "known_examples": [
+            "This attack begins with a spear phishing attack through a targeted email campaign. Over 80 files were sent to 40 email accounts within the organization, within the span of about an hour. The email contains Microsoft Excel attachments with malicious macros",
+            "If the attack progresses, the user will be taken to the download of an MS Word document containing malicious macros that has very low detection rate at the moment of this campaign delivery. From a metadata standpoint, the document does not include any specific signal or characteristic that would help us tracking documents from the same author, as shown in Figure 6",
+            "ESTSecurity inspected a malicious lure document discussing North Korean defectors. This lure document contained a UPX packed binary that reached out to wave[.]posadadesantiago[.]com. Based upon their report we believe SHA256: 252d1b7a379f97fddd691880c1cf93eaeb2a5e5572e92a25240b75953c88736c, either is or is strikingly similar to the document discussed in their blog post based on these similarities"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1566/001"
+        },
+        {
+          "technique_id": "T1608.004",
+          "name": "Drive-by Target",
+          "retrieval_score": 0.116788,
+          "tactics": [
+            "resource-development"
+          ],
+          "description": "Adversaries may prepare an operational environment to infect systems that visit a website over the normal course of browsing. Endpoint systems may be compromised through browsing to adversary controlled sites, as in [Drive-by Compromise](https://attack.mitre.org/techniques/T1189). In such cases, the user's web browser is typically targeted for exploitation (often not requiring any extra user interaction once landing on the site), but adversaries may also set up websites for non-exploitation behavior such as [Application Access Token](https://attack.mitre.org/techniques/T1550/001). Prior to [Drive-by Compromise](https://attack.mitre.org/techniques/T1189), adversaries must stage resources needed to deliver that exploit to users who browse to an adversary controlled site. Drive-by content can be staged on adversary controlled infrastructure that has been acquired ([Acquire Infrastructure...",
+          "known_examples": [
+            "Our latest Transparent Tribe research confirms that the group continues to create malicious domains mimicking defense-related entities as a core component of their operations. The victim is encouraged to click on an embedded URL hosted on sharingmymedia[.]com, which then downloads ObliqueRAT, the trojan discovered by Talos in 2020 associated with threat activity targeting entities in South Asia. We cannot confirm how the maldocs were delivered to victims, but we suspect they were probably sent as attachments to phishing emails based on previous threat actor behavior and the targeted nature of this particular lure. Security researchers previously discovered Transparent Tribe using sharingmymedia[.]com to host Android malware targeting Indian military and defense personnel.Figure 1: Maldoc masquerading as a congratulatory notice from CLAWS. In such cases, adversaries would deliver phishing maldocs to targets containing a malicious VBA macro that extracted either the CrimsonRAT executable or a ZIP archive embedded in the maldoc. The macro dropped the implant to the disk, setting up persistence mechanisms and eventually executing the payload on the infected endpoint. For example, attackers leveraging ObliqueRAT started hosting their malicious payloads on compromised websites instead of embedding the malware in the maldoc. Figure 2 shows the attackers' use of HTTrack, a free website copier program, to duplicate a legitimate website to use for their own malicious purposes. These examples highlight Transparent Tribe's heavy reliance on social engineering as a core TTP and the group's efforts to make their operations appear as legitimate as possible.Figure 2: Fake website cloned using HTTrack on May 29, 2020. The malicious domain prompts the victim to enter their name and email address to sign up and download a seemingly important \"guide on pay and allowance",
+            "The websites contain numerous articles and content to make them seem legitimate; in some cases the websites have over 10,000 individual news articles. Volexity has found the content is largely scraped and reposted in full from various other legitimate online news outlets. This appears to be done in an automated fashion and most likely through WordPress plugins. Numerous posted articles and images can be directly tracked back to other online blogs and newspapers; sometimes the byline or even watermark in images show directly where the article was sourced. In some cases, only a small number of pages on the site contains malicious code; in other cases, the profiling code is pervasive",
+            "Dragonfly has compromised websites to redirect traffic and to host exploit kits."
+          ],
+          "url": "https://attack.mitre.org/techniques/T1608/004"
+        },
+        {
+          "technique_id": "T1566.002",
+          "name": "Spearphishing Link",
+          "retrieval_score": 0.082335,
+          "tactics": [
+            "initial-access"
+          ],
+          "description": "Adversaries may send spearphishing emails with a malicious link in an attempt to gain access to victim systems. Spearphishing with a link is a specific variant of spearphishing. It is different from other forms of spearphishing in that it employs the use of links to download malware contained in email, instead of attaching malicious files to the email itself, to avoid defenses that may inspect email attachments. Spearphishing may also involve social engineering techniques, such as posing as a trusted source. All forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this case, the malicious emails contain links. Generally, the links will be accompanied by social engineering text and require the user to actively click or copy and paste a URL into a browser, leveraging [User Execution](https://attack.mitre.org/t...",
+          "known_examples": [
+            "In December 2019, another version of the AppleJeus malware was identified on Twitter by a cybersecurity company based on many similarities to the original AppleJeus malware. In contrast, open-source reporting stated that the Windows version might have been downloaded via instant messaging service Telegram, as it was found in a “Telegram Downloads” folder on an unnamed victim",
+            "Although, the use of target names with actuating themes is not new to this group, there has been a significant uptick in the number of emails received and this campaign has been persistently active for the past few weeks",
+            "We named Lazarus the most active group of 2020. We’ve observed numerous activities by this notorious APT group targeting various industries. The group has changed target depending on the primary objective. Google TAG has recently published a post about a campaign by Lazarus targeting security researchers. We have seen Lazarus attack various industries using this malware cluster before. In mid-2020, we realized that Lazarus was launching attacks on the defense industry using the ThreatNeedle cluster, an advanced malware cluster of Manuscrypt (a.k.a. NukeSped). While investigating this activity, we were able to observe the complete life cycle of an attack, uncovering more technical details and links to the group’s other campaigns"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1566/002"
+        },
+        {
+          "technique_id": "T1005",
+          "name": "Data from Local System",
+          "retrieval_score": 0.079882,
+          "tactics": [
+            "collection"
+          ],
+          "description": "Adversaries may search local system sources, such as file systems, configuration files, local databases, virtual machine files, or process memory, to find files of interest and sensitive data prior to Exfiltration. Adversaries may do this using a [Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059), such as [cmd](https://attack.mitre.org/software/S0106) as well as a [Network Device CLI](https://attack.mitre.org/techniques/T1059/008), which have functionality to interact with the file system to gather information.(Citation: show_run_config_cmd_cisco) Adversaries may also use [Automated Collection](https://attack.mitre.org/techniques/T1119) on the local system.",
+          "known_examples": [
+            "Endpoint Protection . The Trojan.Hydraq Incident . It has been about a week since news of the mysterious Hydraq Trojan (also known as Aurora) attack broke with the unveiling of a threat by Google to pull its operations out of China. Although concrete details of the attacks are not yet public, Google made reference to a number of Gmail accounts that were compromised during or after the attacks. Anatomy of the Attack For a number of years targeted attacks have nearly always followed the same modus operandi. In the more sophisticated attacks, the attacker will use a new zero day vulnerability, as obviously this will have a greater success rate. In this attack a PDF file was used to exploit the Adobe Acrobat, Reader, and Flash Player Remote Code Execution Vulnerability (CVE-2009-1862/BID35759). This PDF installed a Trojan horse which was an earlier version of the current Trojan.Hydraq. This means the remote attacker has the ability to see in real time any user interface activity as if they were sitting right next to the user. As described in the previously posted blog (Hydraq - An Attack of Mythical Proportions), an unpatched Internet Explorer vulnerability (BID 37815) was used as one of the propagation vectors for this particular Trojan.Hydraq attack. This security hole allows remote exploitation, which means that attackers can run any malicious code of their liking on a victim’s machine by taking advantage of the vulnerability. The number of computers we have observed being attacked or have been attacked is low as borne out by our field detection statistics. Prevention &amp; Mitigation Trojan.Hydraq has been known to be spread through specially crafted PDF files and also through malicious Web sites",
+            "Capable of stealing documents sent to the printer queue. Data gathered for victim recon includes the backup list for Apple mobile devices. Steals written CD images. Capable of stealing files previously seen on removable drives once they are available again. Steals Internet Explorer, Netscape Navigator, FireFox and RealNetworks cookies",
+            "In the analyzed sample the RAT component was named “BotDLL[.]dll”. It has some typical RAT functionality such as command shell, video recording of the screen, remote desktop, port forwarding, and file system access"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1005"
+        },
+        {
+          "technique_id": "T1668",
+          "name": "Exclusive Control",
+          "retrieval_score": 0.076387,
+          "tactics": [
+            "persistence"
+          ],
+          "description": "Adversaries who successfully compromise a system may attempt to maintain persistence by “closing the door” behind them – in other words, by preventing other threat actors from initially accessing or maintaining a foothold on the same system. For example, adversaries may patch a vulnerable, compromised system(Citation: Mandiant-iab-control)(Citation: CERT AT Fortinent Ransomware 2025) to prevent other threat actors from leveraging that vulnerability in the future. They may “close the door” in other ways, such as disabling vulnerable services(Citation: sophos-multiple-attackers), stripping privileges from accounts(Citation: aquasec-postgres-processes), or removing other malware already on the compromised device.(Citation: fsecure-netsky) Hindering other threat actors may allow an adversary to maintain sole access to a compromised system or network. This prevents the threat actor from ne...",
+          "known_examples": [],
+          "url": "https://attack.mitre.org/techniques/T1668"
+        },
+        {
+          "technique_id": "T1189",
+          "name": "Drive-by Compromise",
+          "retrieval_score": 0.069265,
+          "tactics": [
+            "initial-access"
+          ],
+          "description": "Adversaries may gain access to a system through a user visiting a website over the normal course of browsing. Multiple ways of delivering exploit code to a browser exist (i.e., [Drive-by Target](https://attack.mitre.org/techniques/T1608/004)), including: * A legitimate website is compromised, allowing adversaries to inject malicious code * Script files served to a legitimate website from a publicly writeable cloud storage bucket are modified by an adversary * Malicious ads are paid for and served through legitimate ad providers (i.e., [Malvertising](https://attack.mitre.org/techniques/T1583/008)) * Built-in web application interfaces that allow user-controllable content are leveraged for the insertion of malicious scripts or iFrames (e.g., cross-site scripting) Browser push notifications may also be abused by adversaries and leveraged for malicious code injection via [User Execution](...",
+          "known_examples": [
+            "From the attacks observed by Volexity, what is most notable is that Patchwork has pivoted its targeting and has launched attacks directly against US-based think tanks. Volexity has also found that, in addition to sending malware lures, the Patchwork threat actors are leveraging unique tracking links in their e-mails for the purpose of identifying which recipients opened their e-mail messages. Strangely, in one case, the threat actors also appear to have used a domain name similar to the Foreign Policy Research Institute (FPRI) in a message purporting to be from CFR. If the exploit is successful, the threat actors will attempt to drop and execute QuasarRAT. Its called the \"packager trick\" because any file embedded in an RTF file using packager will be automatically dropped to the %tmp% folder (c:\\Users\\%username%\\AppData\\Local\\Temp) when the RTF document is opened. Second, the threat actors exploit CVE-2017-8570 to achieve code execution via a malicious \"scriptlet\" file, or .sct file, which is also embedded in the malicious RTF document. The contents of the malicious scriptlet file (displayed below) clearly show the threat actor executing the initial \"qrat.exe\" dropper from the current user's %tmp% directory. The file, named Microsoft.Win32.TaskScheduler.dll, is digitally signed by a certificate from AirVPN. Conclusion . The addition of US-based think tanks to the list of organizations in the crosshairs of Patchwork shows an increasing diversity in the geographic regions being targeted. Volexity is actively tracking this group and the infrastructure currently in use for the benefit of its network security monitoring and threat intelligence customers",
+            "In 2011, while still at McAfee, he went on to reveal Comment Crew (which he calls Comment Panda) operating alongside Elderwood. It's called that because the group so often uses a technique involving internal software \"comment\" features on web pages as a tool to infiltrate target computers",
+            "CWS or WSA web scanning prevents access to malicious websites, including watering hole attacks, and detects malware used in these attacks"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1189"
+        },
+        {
+          "technique_id": "T1078.003",
+          "name": "Local Accounts",
+          "retrieval_score": 0.065608,
+          "tactics": [
+            "stealth",
+            "persistence",
+            "privilege-escalation",
+            "initial-access"
+          ],
+          "description": "Adversaries may obtain and abuse credentials of a local account as a means of gaining Initial Access, Persistence, Privilege Escalation, or Defense Evasion. Local accounts are those configured by an organization for use by users, remote support, services, or for administration on a single system or service. Local Accounts may also be abused to elevate privileges and harvest credentials through [OS Credential Dumping](https://attack.mitre.org/techniques/T1003). Password reuse may allow the abuse of local accounts across a set of machines on a network for the purposes of Privilege Escalation and Lateral Movement.",
+          "known_examples": [
+            "This release adds features to spawn processes with an alternate parent process. This release also gives the operator control over the script templates Cobalt Strike uses in its attacks and workflows. This release of Cobalt Strike pushes back on this technique with the ppid command. For example, if I’m in a user context, I might set explorer.exe as my parent with something plausible (e.g, iexplore.exe) for my temporary processes. If I’m in a SYSTEM context, I might use services.exe as my parent process and ask Beacon to use svchost.exe for its temporary processes. Beacon’s runu command runs an arbitrary command as a child of another parent. These commands offer means to spawn a payload, in another desktop session, without remote process injection. The Resource Kit . Cobalt Strike 3.8’s Resource Kit finally gives you a way to change Cobalt Strike’s built-in script templates. The Resource Kit is a collection of Cobalt Strike’s default script templates and a sample Aggressor Script to bring these into Cobalt Strike. The Resource Kit benefits from new Aggressor Script hooks to provide the PowerShell, Python, and VBA script templates Cobalt Strike uses in its workflows",
+            "Nyetya requires user credentials to spread itself laterally via the PsExec and WMI vectors (which are detailed in the \"Malware Functionality\" section). Talos has identified three ways Nyetya can obtain these credentials. First, credentials can be manually passed in via a command line argument",
+            "Once gaining a foothold, the threat actors use off-the-shelf tools to ensure persistence, including Remote Desktop Protocol (RDP) to maintain access. While GDPR requirements prevented us from pivoting on Registrant information, the actors reused IP space, reused a certificate, and the aforementioned domain mimicking technique allowed for some pivoting. Toolset . Once gaining a foothold on a user’s system, the threat actors behind STOLEN PENCIL use Microsoft’s Remote Desktop Protocol (RDP) for remote point-and-click access. This means a human is behind the keyboard interacting with a compromised system, and not using a RAT (Remote Access Trojan) with a command-and-control site acting as a proxy between the threat actor and the compromised system. A compromised or stolen certificate was used to sign several PE files used in STOLEN PENCIL for two sets of tools: - MECHANICAL Logs keystrokes to %userprofile%\\appdata\\roaming\\apach. GREASE a tool to add a Windows administrator account with a specific username/password and enable RDP, circumventing any firewall rules. defaultes/1qaz2wsx#EDC - a tool to add a Windows administrator account with a specific username/password and enable RDP, circumventing any firewall rules. Figure 5: Certificate used to sign MECHANICAL/GREASE While the threat actors did use a few tools to automate intrusions, we also found a ZIP archive of tools that demonstrate their propensity for password theft to propagate. Using a combination of stolen passwords, backdoor accounts, and a forced-open RDP service, the threat actors are likely to retain a foothold on a compromised system. Conclusion . While we were able to gain insight into the threat actor’s TTPs (Tools, Techniques, &amp; Procedures) behind STOLEN PENCIL, this is clearly just a small window into their activity"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1078/003"
+        },
+        {
+          "technique_id": "T1587.003",
+          "name": "Digital Certificates",
+          "retrieval_score": 0.060781,
+          "tactics": [
+            "resource-development"
+          ],
+          "description": "Adversaries may create self-signed SSL/TLS certificates that can be used during targeting. SSL/TLS certificates are designed to instill trust. They include information about the key, information about its owner's identity, and the digital signature of an entity that has verified the certificate's contents are correct. If the signature is valid, and the person examining the certificate trusts the signer, then they know they can use that key to communicate with its owner. In the case of self-signing, digital certificates will lack the element of trust associated with the signature of a third-party certificate authority (CA). Adversaries may create self-signed SSL/TLS certificates that can be used to further their operations, such as encrypting C2 traffic (ex: [Asymmetric Cryptography](https://attack.mitre.org/techniques/T1573/002) with [Web Protocols](https://attack.mitre.org/techniques...",
+          "known_examples": [
+            "Talos has identified at least three different campaigns since July 2019. It is interesting to note that this threat actor uses HTTPS on the C2. They always use self-signed certificates",
+            "APT29 has created self-signed digital certificates to enable mutual TLS authentication for malware.",
+            "For C0011, Transparent Tribe established SSL certificates on the typo-squatted domains the group registered."
+          ],
+          "url": "https://attack.mitre.org/techniques/T1587/003"
+        },
+        {
+          "technique_id": "T1583.004",
+          "name": "Server",
+          "retrieval_score": 0.059335,
+          "tactics": [
+            "resource-development"
+          ],
+          "description": "Adversaries may buy, lease, rent, or obtain physical servers that can be used during targeting. Use of servers allows an adversary to stage, launch, and execute an operation. During post-compromise activity, adversaries may utilize servers for various tasks, such as watering hole operations in [Drive-by Compromise](https://attack.mitre.org/techniques/T1189), enabling [Phishing](https://attack.mitre.org/techniques/T1566) operations, or facilitating [Command and Control](https://attack.mitre.org/tactics/TA0011). Instead of compromising a third-party [Server](https://attack.mitre.org/techniques/T1584/004) or renting a [Virtual Private Server](https://attack.mitre.org/techniques/T1583/003), adversaries may opt to configure and run their own servers in support of operations. Free trial periods of cloud servers may also be abused.(Citation: Free Trial PurpleUrchin)(Citation: Freejacked) Adv...",
+          "known_examples": [
+            "When connecting to web shells on a target network GALLIUM has been observed employing Taiwan-based servers. Observed IP addresses appear to be exclusive to GALLIUM, have little to no legitimate activity, and are reused in multiple operations. These servers provide high fidelity pivot points during an investigation",
+            "Cobalt Strike was also used to continuously communicate with the main command-and-control (C&C) server.",
+            "Earth Karkaddan actors are known to use the Crimson RAT malware in its campaigns to communicate with its command-and-control (C&C) server to download other malware or exfiltrate data."
+          ],
+          "url": "https://attack.mitre.org/techniques/T1583/004"
+        },
+        {
+          "technique_id": "T1564.001",
+          "name": "Hidden Files and Directories",
+          "retrieval_score": 0.056678,
+          "tactics": [
+            "stealth"
+          ],
+          "description": "Adversaries may set files and directories to be hidden to evade detection mechanisms. To prevent normal users from accidentally changing special files on a system, most operating systems have the concept of a ‘hidden’ file. These files don’t show up when a user browses the file system with a GUI or when using normal commands on the command line. Users must explicitly ask to show the hidden files either via a series of Graphical User Interface (GUI) prompts or with command line switches (<code>dir /a</code> for Windows and <code>ls –a</code> for Linux and macOS). On Linux and Mac, users can mark specific files as hidden simply by putting a “.” as the first character in the file or folder name (Citation: Sofacy Komplex Trojan) (Citation: Antiquated Mac Malware). Files and folders that start with a period, ‘.’, are by default hidden from being viewed in the Finder application and standar...",
+          "known_examples": [
+            "At installation, the MSI file drops three files and creates one hidden directory (UFile) into C:\\ProgramData\\Apple\\Update\\, likely as a ruse",
+            "Tracing the origin of the hidden .mina file showed that it is a copy of an included resource, renamed SubMenu.nib, from the application bundle and where the main backdoor functions were contained. It also has the same links to Lazarus’ Windows and Linux predecessors: the presence of the hardcoded strings c_2910.cls and k_3872.cls. Both strings were previously used during C&amp;C communication to the domain thevagabondsatchel[.]com as the sample storage of the cybercriminal group, as reported by 360 Netlab researchers",
+            "A format string that defaults to “public/Publics” that modifies characteristics of the folder and hide it from the infected user"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1564/001"
+        }
+      ],
+      "llm_provider": "ollama",
+      "raw_llm_result": {
+        "selected_techniques": [
+          {
+            "technique_id": "T1566.001",
+            "name": "Spearphishing Attachment",
+            "confidence": 0.9,
+            "reason": "Evidence indicates the use of bait documentation that eventually released CrimsonRAT, implying a malicious attachment delivered via spearphishing.",
+            "evidence": "sample used the bait documentation to eventually release its exclusive Trojan, CrimsonRAT"
+          }
+        ],
+        "rejected_candidates": [
+          {
+            "technique_id": "T1608.004",
+            "reason": "No explicit mention of a drive‑by target or staged web content in the evidence."
+          },
+          {
+            "technique_id": "T1566.002",
+            "reason": "No mention of a malicious link; the evidence refers to a document attachment."
+          },
+          {
+            "technique_id": "T1005",
+            "reason": "No indication of local system data collection."
+          },
+          {
+            "technique_id": "T1668",
+            "reason": "No evidence of exclusive control or denial of other actors."
+          },
+          {
+            "technique_id": "T1189",
+            "reason": "No explicit drive‑by compromise activity described."
+          },
+          {
+            "technique_id": "T1078.003",
+            "reason": "No mention of local account abuse."
+          },
+          {
+            "technique_id": "T1587.003",
+            "reason": "No reference to digital certificates."
+          },
+          {
+            "technique_id": "T1583.004",
+            "reason": "No mention of server acquisition or use."
+          },
+          {
+            "technique_id": "T1564.001",
+            "reason": "No mention of hidden files or directories."
+          }
+        ]
+      },
+      "selected_techniques": [
+        {
+          "technique_id": "T1566.001",
+          "name": "Spearphishing Attachment",
+          "confidence": 0.9,
+          "reason": "Evidence indicates the use of bait documentation that eventually released CrimsonRAT, implying a malicious attachment delivered via spearphishing.",
+          "evidence": "sample used the bait documentation to eventually release its exclusive Trojan, CrimsonRAT"
+        }
+      ],
+      "rejected_candidates": [
+        {
+          "technique_id": "T1608.004",
+          "reason": "No explicit mention of a drive‑by target or staged web content in the evidence."
+        },
+        {
+          "technique_id": "T1566.002",
+          "reason": "No mention of a malicious link; the evidence refers to a document attachment."
+        },
+        {
+          "technique_id": "T1005",
+          "reason": "No indication of local system data collection."
+        },
+        {
+          "technique_id": "T1668",
+          "reason": "No evidence of exclusive control or denial of other actors."
+        },
+        {
+          "technique_id": "T1189",
+          "reason": "No explicit drive‑by compromise activity described."
+        },
+        {
+          "technique_id": "T1078.003",
+          "reason": "No mention of local account abuse."
+        },
+        {
+          "technique_id": "T1587.003",
+          "reason": "No reference to digital certificates."
+        },
+        {
+          "technique_id": "T1583.004",
+          "reason": "No mention of server acquisition or use."
+        },
+        {
+          "technique_id": "T1564.001",
+          "reason": "No mention of hidden files or directories."
+        }
+      ],
+      "validation_errors": [],
+      "evidence_metadata": {
+        "source": "section",
+        "section_title": "Analysis of APT-C-56 (Transparent Tribe) camouflage resume attack campaign",
+        "chunk_index": 2,
+        "text": "tack campaign targeting the foreign trade industry using backlinks. Recently, the 360 Advanced Threat Institute detected a sample of suspected Transparent Tribe's attack activity. We speculate that the previous operation went undetected, and the sample used the bait documentation to eventually release its exclusive Trojan, CrimsonRAT."
+      },
+      "runtime_seconds": 9.603
+    },
+    {
+      "evidence": "1. Attack process analysis Attack campaigns using decoy documents that disguise resumes. Through the release of CrimsonRAT through Dropper, continuous monitoring of users in the middle of the recruitment. 2. Load delivery analysis",
+      "retrieved_candidates": [
+        {
+          "technique_id": "T1001.003",
+          "name": "Protocol or Service Impersonation",
+          "retrieval_score": 0.11122,
+          "tactics": [
+            "command-and-control"
+          ],
+          "description": "Adversaries may impersonate legitimate protocols or web service traffic to disguise command and control activity and thwart analysis efforts. By impersonating legitimate protocols or web services, adversaries can make their command and control traffic blend in with legitimate network traffic. Adversaries may impersonate a fake SSL/TLS handshake to make it look like subsequent traffic is SSL/TLS encrypted, potentially interfering with some security tooling, or to make the traffic look like it is related with a trusted entity. Adversaries may also leverage legitimate protocols to impersonate expected web traffic or trusted services. For example, adversaries may manipulate HTTP headers, URI endpoints, SSL certificates, and transmitted data to disguise C2 communications or mimic legitimate services such as Gmail, Google Drive, and Yahoo Messenger.(Citation: ESET Okrum July 2019)(Citation:...",
+          "known_examples": [
+            "Contacts an IP address / domain that was used to host a malicious document from a Lazarus previous campaign in 2017 - Same author appeared in these recent malicious documents that also appeared back in Lazarus 2017 campaigns - Uses the same malicious document structure and similar job recruitment ads as what we observed in past Lazarus campaigns - The techniques, tactics and procedures align with Lazarus group’s interest in crypto currency theft",
+            "messengers. Figures 9 and 10 show FakeM attempting to resemble MSN or Yahoo. Messenger traffic, as the first 32-bytes contain data that resemble legitimate traffic generated by these chat programs",
+            "BADCALL uses a FakeTLS method during C2."
+          ],
+          "url": "https://attack.mitre.org/techniques/T1001/003"
+        },
+        {
+          "technique_id": "T1526",
+          "name": "Cloud Service Discovery",
+          "retrieval_score": 0.074347,
+          "tactics": [
+            "discovery"
+          ],
+          "description": "An adversary may attempt to enumerate the cloud services running on a system after gaining access. These methods can differ from platform-as-a-service (PaaS), to infrastructure-as-a-service (IaaS), or software-as-a-service (SaaS). Many services exist throughout the various cloud providers and can include Continuous Integration and Continuous Delivery (CI/CD), Lambda Functions, Entra ID, etc. They may also include security services, such as AWS GuardDuty and Microsoft Defender for Cloud, and logging services, such as AWS CloudTrail and Google Cloud Audit Logs. Adversaries may attempt to discover information about the services enabled throughout the environment. Azure tools and APIs, such as the Microsoft Graph API and Azure Resource Manager API, can enumerate resources and services, including applications, management groups, resources and policy definitions, and their relationships tha...",
+          "known_examples": [
+            "AADInternals can enumerate information about a variety of cloud services, such as Office 365 and Sharepoint instances or OpenID Configurations."
+          ],
+          "url": "https://attack.mitre.org/techniques/T1526"
+        },
+        {
+          "technique_id": "T1574.001",
+          "name": "DLL",
+          "retrieval_score": 0.067907,
+          "tactics": [
+            "stealth",
+            "execution"
+          ],
+          "description": "Adversaries may abuse dynamic-link library files (DLLs) in order to achieve persistence, escalate privileges, and evade defenses. DLLs are libraries that contain code and data that can be simultaneously utilized by multiple programs. While DLLs are not malicious by nature, they can be abused through mechanisms such as side-loading, hijacking search order, and phantom DLL hijacking.(Citation: unit 42) Specific ways DLLs are abused by adversaries include: ### DLL Sideloading Adversaries may execute their own malicious payloads by side-loading DLLs. Side-loading involves hijacking which DLL a program loads by planting and then invoking a legitimate application that executes their payload(s). Side-loading positions both the victim application and malicious payload(s) alongside each other. Adversaries likely use side-loading as a means of masking actions they perform under a legitimate, tr...",
+          "known_examples": [
+            "WastedLocker aims to encrypt the files of the infected host. However before the encryption procedure runs, WastedLocker performs a few other tasks to ensure the ransomware will run properly",
+            "From September to December 2018 the RTM group sent out more than 11,000 malicious emails. The cybercriminals, however, are not going to stop there, as evidenced by the new malicious campaigns that we track as part of our ongoing threat intelligence activities. Where do we begin our search. Let's start with simple things: we will take the NTUSER.DAT registry file with the latest modification date from the user directory (C:\\Users\\%username%\\), and extract data from it using RegRipper. In general, you do not have to stick to the Sleuth Kit at all; there are more convenient tools like FTK Imager, a free tool, which can be used not only to create forensic images, but also to examine their contents. Let's take a closer look at apg.exe and use PPEE: This looks like TeamViewer and is signed as TeamViewer, so does this mean it indeed is TeamViewer. Judging by the file's size, it has nothing to do with the original msi.dll, so it is clearly DLL Search Order Hijacking. The operating system starts searching for the necessary libraries from the current directory, which means that instead of the legitimate msi.dll, the one located in b7mg81 will be loaded. Another interesting file is TeamViewer.ini: Here is anti-forensics: according to the configuration file, our \"TeamViewer\" did not keep any logs, and was apparently used as a RAT (Remote Access Trojan). Well, not bad. I think what we can use the Sleuth Kit again",
+            "BackdoorDiplomacy is a group that primarily targets diplomatic organizations in the Middle East and Africa, and less frequently, telecommunication companies. Their initial attack methodology is focused on exploiting vulnerable internet-exposed applications on webservers, in order to drop and execute a webshell. Post compromise, via the webshell, BackdoorDiplomacy deploys open-source software for reconnaissance and information gathering, and favors the use of DLL search order hijacking to install its backdoor, Turian. Finally, BackdoorDiplomacy employs a separate executable to detect removable media, likely USB flash drives, and copy their contents to the main drive’s recycle bin"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1574/001"
+        },
+        {
+          "technique_id": "T1218.010",
+          "name": "Regsvr32",
+          "retrieval_score": 0.065064,
+          "tactics": [
+            "stealth"
+          ],
+          "description": "Adversaries may abuse Regsvr32.exe to proxy execution of malicious code. Regsvr32.exe is a command-line program used to register and unregister object linking and embedding controls, including dynamic link libraries (DLLs), on Windows systems. The Regsvr32.exe binary may also be signed by Microsoft. (Citation: Microsoft Regsvr32) Malicious usage of Regsvr32.exe may avoid triggering security tools that may not monitor execution of, and modules loaded by, the regsvr32.exe process because of allowlists or false positives from Windows using regsvr32.exe for normal operations. Regsvr32.exe can also be used to specifically bypass application control using functionality to load COM scriptlets to execute DLLs under user permissions. Since Regsvr32.exe is network and proxy aware, the scripts can be loaded by passing a uniform resource locator (URL) to file on an external Web server as an argum...",
+          "known_examples": [
+            "APT19 used three different techniques to attempt to compromise targets. Toward the end of May, APT19 switched to using macro-enabled Microsoft Excel (XLSM) documents. In the most recent versions, APT19 added an application whitelisting bypass to the XLSM documents",
+            "After decoding the PDF and AppleSeed payload, the content gets written into the ProgramData directory. At the end, the decoy PDF file is opened by calling Wscript.Shell.Run and the AppleSeed payload executed through PowerShell by calling regsvr32.exe. Calling regsvr32.exe to run a DLL registers it as a server that automatically calls the DLL export function that has been named DllRegisterServer",
+            "The RTF file contains macro codes that will execute a PowerShell command to retrieve a dynamic-link library (DLL) file before executing it using odbcconf.exe, a command-line utility related to Microsoft Data Access Components. The DLL will drop and execute a malicious JScript using regsvr32.exe, another command-line utility, to download another JScript and execute it using the same regsvr32.exe. During analysis, we received a PowerShell command that downloads Cobalt Strike from hxxps://5[.]135[.]237[.]216[/]RLxF"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1218/010"
+        },
+        {
+          "technique_id": "T1559.002",
+          "name": "Dynamic Data Exchange",
+          "retrieval_score": 0.059932,
+          "tactics": [
+            "execution"
+          ],
+          "description": "Adversaries may use Windows Dynamic Data Exchange (DDE) to execute arbitrary commands. DDE is a client-server protocol for one-time and/or continuous inter-process communication (IPC) between applications. Once a link is established, applications can autonomously exchange transactions consisting of strings, warm data links (notifications when a data item changes), hot data links (duplications of changes to a data item), and requests for command execution. Object Linking and Embedding (OLE), or the ability to link data between documents, was originally implemented through DDE. Despite being superseded by [Component Object Model](https://attack.mitre.org/techniques/T1559/001), DDE may be enabled in Windows 10 and most of Microsoft Office 2016 via Registry keys.(Citation: BleepingComputer DDE Disabled in Word Dec 2017)(Citation: Microsoft ADV170021 Dec 2017)(Citation: Microsoft DDE Advis...",
+          "known_examples": [
+            "This document likely marks the first observed use of this technique by APT28. The use of DDE with PowerShell allows an attacker to execute arbitrary code on a victim’s system regardless whether macros are enabled",
+            "Our initial discovery of GravityRAT was through a malicious Word document. We were able to discover four distinct versions of GravityRAT, developed over two years",
+            "1) Use PowerShell Constrained Language Mode as it uses IEX, Add-Type, and New-Object. 2) Lock PowerShell Execution Policy, must be set to “AllSigned” via GPO. 3) An allowlisting solution to prevent certain process child-parent execution hierarchies"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1559/002"
+        },
+        {
+          "technique_id": "T1090",
+          "name": "Proxy",
+          "retrieval_score": 0.059811,
+          "tactics": [
+            "command-and-control"
+          ],
+          "description": "Adversaries may use a connection proxy to direct network traffic between systems or act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap. (Citation: Trend Micro APT Attack Tools) Adversaries use these types of proxies to manage command and control communications, reduce the number of simultaneous outbound network connections, provide resiliency in the face of connection loss, or to ride over existing trusted communications paths between victims to avoid suspicion. Adversaries may chain together multiple proxies to further disguise the source of malicious traffic. Adversaries can also take advantage of routing schemes in Content Delivery N...",
+          "known_examples": [
+            "CISA also observed the threat actor using open-source tools such as Plink and TightVNC for lateral movement. CISA observed the threat actor using the techniques identified in table 8 for lateral movement within the victim environment",
+            "In the analyzed sample the RAT component was named “BotDLL[.]dll”. It has some typical RAT functionality such as command shell, video recording of the screen, remote desktop, port forwarding, and file system access",
+            "In at least one engagement, we observed Blue Mockingbird seemingly experimenting with different tools to create SOCKS proxies (T1090: Proxy) for pivoting. These tools included a fast reverse proxy (frp), Secure Socket Funneling (SSF), and Venom"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1090"
+        },
+        {
+          "technique_id": "T1563",
+          "name": "Remote Service Session Hijacking",
+          "retrieval_score": 0.058432,
+          "tactics": [
+            "lateral-movement"
+          ],
+          "description": "Adversaries may take control of preexisting sessions with remote services to move laterally in an environment. Users may use valid credentials to log into a service specifically designed to accept remote connections, such as telnet, SSH, and RDP. When a user logs into a service, a session will be established that will allow them to maintain a continuous interaction with that service. Adversaries may commandeer these sessions to carry out actions on remote systems. [Remote Service Session Hijacking](https://attack.mitre.org/techniques/T1563) differs from use of [Remote Services](https://attack.mitre.org/techniques/T1021) because it hijacks an existing session rather than creating a new session using [Valid Accounts](https://attack.mitre.org/techniques/T1078).(Citation: RDP Hijacking Medium)(Citation: Breach Post-mortem SSH Hijack)",
+          "known_examples": [],
+          "url": "https://attack.mitre.org/techniques/T1563"
+        },
+        {
+          "technique_id": "T1078.003",
+          "name": "Local Accounts",
+          "retrieval_score": 0.05756,
+          "tactics": [
+            "stealth",
+            "persistence",
+            "privilege-escalation",
+            "initial-access"
+          ],
+          "description": "Adversaries may obtain and abuse credentials of a local account as a means of gaining Initial Access, Persistence, Privilege Escalation, or Defense Evasion. Local accounts are those configured by an organization for use by users, remote support, services, or for administration on a single system or service. Local Accounts may also be abused to elevate privileges and harvest credentials through [OS Credential Dumping](https://attack.mitre.org/techniques/T1003). Password reuse may allow the abuse of local accounts across a set of machines on a network for the purposes of Privilege Escalation and Lateral Movement.",
+          "known_examples": [
+            "This release adds features to spawn processes with an alternate parent process. This release also gives the operator control over the script templates Cobalt Strike uses in its attacks and workflows. This release of Cobalt Strike pushes back on this technique with the ppid command. For example, if I’m in a user context, I might set explorer.exe as my parent with something plausible (e.g, iexplore.exe) for my temporary processes. If I’m in a SYSTEM context, I might use services.exe as my parent process and ask Beacon to use svchost.exe for its temporary processes. Beacon’s runu command runs an arbitrary command as a child of another parent. These commands offer means to spawn a payload, in another desktop session, without remote process injection. The Resource Kit . Cobalt Strike 3.8’s Resource Kit finally gives you a way to change Cobalt Strike’s built-in script templates. The Resource Kit is a collection of Cobalt Strike’s default script templates and a sample Aggressor Script to bring these into Cobalt Strike. The Resource Kit benefits from new Aggressor Script hooks to provide the PowerShell, Python, and VBA script templates Cobalt Strike uses in its workflows",
+            "Nyetya requires user credentials to spread itself laterally via the PsExec and WMI vectors (which are detailed in the \"Malware Functionality\" section). Talos has identified three ways Nyetya can obtain these credentials. First, credentials can be manually passed in via a command line argument",
+            "Once gaining a foothold, the threat actors use off-the-shelf tools to ensure persistence, including Remote Desktop Protocol (RDP) to maintain access. While GDPR requirements prevented us from pivoting on Registrant information, the actors reused IP space, reused a certificate, and the aforementioned domain mimicking technique allowed for some pivoting. Toolset . Once gaining a foothold on a user’s system, the threat actors behind STOLEN PENCIL use Microsoft’s Remote Desktop Protocol (RDP) for remote point-and-click access. This means a human is behind the keyboard interacting with a compromised system, and not using a RAT (Remote Access Trojan) with a command-and-control site acting as a proxy between the threat actor and the compromised system. A compromised or stolen certificate was used to sign several PE files used in STOLEN PENCIL for two sets of tools: - MECHANICAL Logs keystrokes to %userprofile%\\appdata\\roaming\\apach. GREASE a tool to add a Windows administrator account with a specific username/password and enable RDP, circumventing any firewall rules. defaultes/1qaz2wsx#EDC - a tool to add a Windows administrator account with a specific username/password and enable RDP, circumventing any firewall rules. Figure 5: Certificate used to sign MECHANICAL/GREASE While the threat actors did use a few tools to automate intrusions, we also found a ZIP archive of tools that demonstrate their propensity for password theft to propagate. Using a combination of stolen passwords, backdoor accounts, and a forced-open RDP service, the threat actors are likely to retain a foothold on a compromised system. Conclusion . While we were able to gain insight into the threat actor’s TTPs (Tools, Techniques, &amp; Procedures) behind STOLEN PENCIL, this is clearly just a small window into their activity"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1078/003"
+        },
+        {
+          "technique_id": "T1020.001",
+          "name": "Traffic Duplication",
+          "retrieval_score": 0.057494,
+          "tactics": [
+            "exfiltration"
+          ],
+          "description": "Adversaries may leverage traffic mirroring in order to automate data exfiltration over compromised infrastructure. Traffic mirroring is a native feature for some devices, often used for network analysis. For example, devices may be configured to forward network traffic to one or more destinations for analysis by a network analyzer or other monitoring device. (Citation: Cisco Traffic Mirroring)(Citation: Juniper Traffic Mirroring) Adversaries may abuse traffic mirroring to mirror or redirect network traffic through other infrastructure they control. Malicious modifications to network devices to enable traffic redirection may be possible through [ROMMONkit](https://attack.mitre.org/techniques/T1542/004) or [Patch System Image](https://attack.mitre.org/techniques/T1601/001).(Citation: US-CERT-TA18-106A)(Citation: Cisco Blog Legacy Device Attacks) Many cloud-based environments also suppor...",
+          "known_examples": [
+            "After this, the Carbanak backdoor can then be used to log keystrokes and capture screenshots, steal and delete cookies, inject malicious code on sites, and monitor various traffic. For lateral movement, the malware abuses remote and system administration tools."
+          ],
+          "url": "https://attack.mitre.org/techniques/T1020/001"
+        },
+        {
+          "technique_id": "T1683.001",
+          "name": "Written Content",
+          "retrieval_score": 0.056906,
+          "tactics": [
+            "resource-development"
+          ],
+          "description": "Adversaries may create or tailor written materials to support targeting and malicious operations. Content may include phishing lures, fraudulent financial communications, fabricated job postings, fabricated employment credentials and documentation, decoy documents, social media persona content, and supporting narratives used to sustain fabricated personas over time.(Citation: GenAI Phishing)(Citation: GTIG AI Threat Tracker) Content may be authored manually, commissioned through third parties, or produced using AI-assisted tools. Written materials may impersonate legitimate government correspondence, diplomatic communications, or internal organizational documents to support targeting efforts. AI-assisted tools may also be used to tailor content to specific targets, industries, or regions. For example, adversaries may leverage AI to translate content into a target's native language or...",
+          "known_examples": [],
+          "url": "https://attack.mitre.org/techniques/T1683/001"
+        }
+      ],
+      "llm_provider": "ollama",
+      "raw_llm_result": {
+        "selected_techniques": [
+          {
+            "technique_id": "T1683.001",
+            "name": "Written Content",
+            "confidence": 0.92,
+            "reason": "Evidence explicitly mentions decoy documents disguised as resumes, which is a form of written content created to support malicious operations.",
+            "evidence": "Attack campaigns using decoy documents that disguise resumes."
+          }
+        ],
+        "rejected_candidates": [
+          {
+            "technique_id": "T1001.003",
+            "reason": "No evidence of protocol or service impersonation is provided."
+          },
+          {
+            "technique_id": "T1526",
+            "reason": "No evidence of cloud service discovery is mentioned."
+          },
+          {
+            "technique_id": "T1574.001",
+            "reason": "No mention of DLL abuse or side-loading is present."
+          },
+          {
+            "technique_id": "T1218.010",
+            "reason": "No evidence of Regsvr32 usage is provided."
+          },
+          {
+            "technique_id": "T1559.002",
+            "reason": "No evidence of Dynamic Data Exchange usage is present."
+          },
+          {
+            "technique_id": "T1090",
+            "reason": "No evidence of proxy or tunneling activity is mentioned."
+          },
+          {
+            "technique_id": "T1563",
+            "reason": "No evidence of remote service session hijacking is provided."
+          },
+          {
+            "technique_id": "T1078.003",
+            "reason": "No evidence of local account abuse is mentioned."
+          },
+          {
+            "technique_id": "T1020.001",
+            "reason": "No evidence of traffic duplication or mirroring is present."
+          }
+        ]
+      },
+      "selected_techniques": [
+        {
+          "technique_id": "T1683.001",
+          "name": "Written Content",
+          "confidence": 0.92,
+          "reason": "Evidence explicitly mentions decoy documents disguised as resumes, which is a form of written content created to support malicious operations.",
+          "evidence": "Attack campaigns using decoy documents that disguise resumes."
+        }
+      ],
+      "rejected_candidates": [
+        {
+          "technique_id": "T1001.003",
+          "reason": "No evidence of protocol or service impersonation is provided."
+        },
+        {
+          "technique_id": "T1526",
+          "reason": "No evidence of cloud service discovery is mentioned."
+        },
+        {
+          "technique_id": "T1574.001",
+          "reason": "No mention of DLL abuse or side-loading is present."
+        },
+        {
+          "technique_id": "T1218.010",
+          "reason": "No evidence of Regsvr32 usage is provided."
+        },
+        {
+          "technique_id": "T1559.002",
+          "reason": "No evidence of Dynamic Data Exchange usage is present."
+        },
+        {
+          "technique_id": "T1090",
+          "reason": "No evidence of proxy or tunneling activity is mentioned."
+        },
+        {
+          "technique_id": "T1563",
+          "reason": "No evidence of remote service session hijacking is provided."
+        },
+        {
+          "technique_id": "T1078.003",
+          "reason": "No evidence of local account abuse is mentioned."
+        },
+        {
+          "technique_id": "T1020.001",
+          "reason": "No evidence of traffic duplication or mirroring is present."
+        }
+      ],
+      "validation_errors": [],
+      "evidence_metadata": {
+        "source": "section",
+        "section_title": "1. Analysis of attack activities",
+        "chunk_index": 1,
+        "text": "1. Attack process analysis Attack campaigns using decoy documents that disguise resumes. Through the release of CrimsonRAT through Dropper, continuous monitoring of users in the middle of the recruitment. 2. Load delivery analysis"
+      },
+      "runtime_seconds": 11.642
+    },
+    {
+      "evidence": "The sample name we captured is Sonam kaur_2, the document name is similar to the sample, the file name below is Sonam Singh's document, which also uses the name of the person as the document name, and Sonam Singh's document is a personal work resume. Unlike the same attack we speculate is that the malicious document we capture only contains macro code inside the open window, and once the user inadvertently clicks to start the macro function, the hidden malicious macro code runs automatically. We also found an account with the same name on Twitter, and in the profile we can see that the status location is in Mumbai and is a wealth consulting firm. The Tweet update is as of July 2021, and while this is consistent with our presumed timing of the action, it is not possible to tell if this tweet is related to the documentation. The macro code disguises itself as an Mdiaz-related program in the ALLUSERSPROFILE directory, reads hidden data from the specified structure of the malicious document and writes it to a file, which shows that APT-C-56 (transparent tribe) uses simple string concatenation technology to disassemble exe characters to avoid static killing by antivirus engines.",
+      "retrieved_candidates": [
+        {
+          "technique_id": "T1566.001",
+          "name": "Spearphishing Attachment",
+          "retrieval_score": 0.13347,
+          "tactics": [
+            "initial-access"
+          ],
+          "description": "Adversaries may send spearphishing emails with a malicious attachment in an attempt to gain access to victim systems. Spearphishing attachment is a specific variant of spearphishing. Spearphishing attachment is different from other forms of spearphishing in that it employs the use of malware attached to an email. All forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this scenario, adversaries attach a file to the spearphishing email and usually rely upon [User Execution](https://attack.mitre.org/techniques/T1204) to gain execution.(Citation: Unit 42 DarkHydrus July 2018) Spearphishing may also involve social engineering techniques, such as posing as a trusted source. There are many options for the attachment such as Microsoft Office documents, executables, PDFs, or archived files. Upon opening the attachm...",
+          "known_examples": [
+            "This attack begins with a spear phishing attack through a targeted email campaign. Over 80 files were sent to 40 email accounts within the organization, within the span of about an hour. The email contains Microsoft Excel attachments with malicious macros",
+            "If the attack progresses, the user will be taken to the download of an MS Word document containing malicious macros that has very low detection rate at the moment of this campaign delivery. From a metadata standpoint, the document does not include any specific signal or characteristic that would help us tracking documents from the same author, as shown in Figure 6",
+            "ESTSecurity inspected a malicious lure document discussing North Korean defectors. This lure document contained a UPX packed binary that reached out to wave[.]posadadesantiago[.]com. Based upon their report we believe SHA256: 252d1b7a379f97fddd691880c1cf93eaeb2a5e5572e92a25240b75953c88736c, either is or is strikingly similar to the document discussed in their blog post based on these similarities"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1566/001"
+        },
+        {
+          "technique_id": "T1221",
+          "name": "Template Injection",
+          "retrieval_score": 0.121079,
+          "tactics": [
+            "stealth"
+          ],
+          "description": "Adversaries may create or modify references in user document templates to conceal malicious code or force authentication attempts. For example, Microsoft’s Office Open XML (OOXML) specification defines an XML-based format for Office documents (.docx, xlsx, .pptx) to replace older binary formats (.doc, .xls, .ppt). OOXML files are packed together ZIP archives compromised of various XML files, referred to as parts, containing properties that collectively define how a document is rendered.(Citation: Microsoft Open XML July 2017) Properties within parts may reference shared public resources accessed via online URLs. For example, template properties may reference a file, serving as a pre-formatted document blueprint, that is fetched when the document is loaded. Adversaries may abuse these templates to initially conceal malicious code to be executed via user documents. Template references i...",
+          "known_examples": [
+            "We mentioned earlier that docx files (like xlsx and pptx) are part of the OOXML standard. The document defining this standard[6], describes the syntax and values that can be used as an example. An interesting file to look at is the ‘settings.xml’ file that can be discovered in the ‘Word’ container of the docx zip file. This file contains settings with regards to language, markup and more. First, we extracted all the data from the settings.xml files and started to compare. All the documents below contained the same language values",
+            "One of the access vectors most used by ACTINIUM is spear-phishing emails with malicious macro attachments that employ remote templates. Remote template injection refers to the method of causing a document to load a remote document template that contains the malicious code, in this case, macros",
+            "Remote templates are a feature of Microsoft Word which allow a document to load a template to be used in a document – this template can be externally hosted, either on a file share, or on the internet. The template is then loaded when the document is opened. The Inception attackers use this feature in a malicious context as shown in Figure 1 below"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1221"
+        },
+        {
+          "technique_id": "T1564.003",
+          "name": "Hidden Window",
+          "retrieval_score": 0.115161,
+          "tactics": [
+            "stealth"
+          ],
+          "description": "Adversaries may use hidden windows to conceal malicious activity from the plain sight of users. In some cases, windows that would typically be displayed when an application carries out an operation can be hidden. This may be utilized by system administrators to avoid disrupting user work environments when carrying out administrative tasks. Adversaries may abuse these functionalities to hide otherwise visible windows from users so as not to alert the user to adversary activity on the system.(Citation: Antiquated Mac Malware) On macOS, the configurations for how applications run are listed in property list (plist) files. One of the tags in these files can be <code>apple.awt.UIElement</code>, which allows for Java applications to prevent the application's icon from appearing in the Dock. A common use for this is when applications run in the system tray, but don't also want to show up in...",
+          "known_examples": [
+            "1) Writes itself to %AppData%\\Microsoft\\Word\\log.ps1 2) Sets up persistence for this file, using a run key. 3) Adds a registry key so that future powershell.exe instances are spawned off-screen by default – this trick is explained here. 6) Removes all registry entries that are left behind during the dropper process",
+            "The payload is an application that creates a hidden window (the name of the class and the window is SK_Parasite",
+            "1) Resolves WINAPI functions 2) Hides its GUI using ShowWindow WINAPI call 3) Compares if the DLL is being ran by wmplayer"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1564/003"
+        },
+        {
+          "technique_id": "T1564.001",
+          "name": "Hidden Files and Directories",
+          "retrieval_score": 0.114298,
+          "tactics": [
+            "stealth"
+          ],
+          "description": "Adversaries may set files and directories to be hidden to evade detection mechanisms. To prevent normal users from accidentally changing special files on a system, most operating systems have the concept of a ‘hidden’ file. These files don’t show up when a user browses the file system with a GUI or when using normal commands on the command line. Users must explicitly ask to show the hidden files either via a series of Graphical User Interface (GUI) prompts or with command line switches (<code>dir /a</code> for Windows and <code>ls –a</code> for Linux and macOS). On Linux and Mac, users can mark specific files as hidden simply by putting a “.” as the first character in the file or folder name (Citation: Sofacy Komplex Trojan) (Citation: Antiquated Mac Malware). Files and folders that start with a period, ‘.’, are by default hidden from being viewed in the Finder application and standar...",
+          "known_examples": [
+            "At installation, the MSI file drops three files and creates one hidden directory (UFile) into C:\\ProgramData\\Apple\\Update\\, likely as a ruse",
+            "Tracing the origin of the hidden .mina file showed that it is a copy of an included resource, renamed SubMenu.nib, from the application bundle and where the main backdoor functions were contained. It also has the same links to Lazarus’ Windows and Linux predecessors: the presence of the hardcoded strings c_2910.cls and k_3872.cls. Both strings were previously used during C&amp;C communication to the domain thevagabondsatchel[.]com as the sample storage of the cybercriminal group, as reported by 360 Netlab researchers",
+            "A format string that defaults to “public/Publics” that modifies characteristics of the folder and hide it from the infected user"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1564/001"
+        },
+        {
+          "technique_id": "T1547.001",
+          "name": "Registry Run Keys / Startup Folder",
+          "retrieval_score": 0.108805,
+          "tactics": [
+            "persistence",
+            "privilege-escalation"
+          ],
+          "description": "Adversaries may achieve persistence by adding a program to a startup folder or referencing it with a Registry run key. Adding an entry to the \"run keys\" in the Registry or startup folder will cause the program referenced to be executed when a user logs in.(Citation: Microsoft Run Key) These programs will be executed under the context of the user and will have the account's associated permissions level. The following run keys are created by default on Windows systems: * <code>HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</code> * <code>HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce</code> * <code>HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</code> * <code>HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce</code> Run keys may exist under multiple hives.(Citation: Microsoft Wow6432Node 2018)(Citation: Malwarebyt...",
+          "known_examples": [
+            "This will also force the victim to re-open the browser using the newly written .lnk file, which is now loaded with Grandoreiro’s malicious extension. This extension will load on every browser startup using this specific .lnk file",
+            "We also analyzed further Gamaredon tools that have the ability to inject malicious macros and remote templates into existing Office documents. Tools linked to Gamaredon and discussed in this blogpost are detected as variants of MSIL/Pterodo, Win32/Pterodo or Win64/Pterodo by ESET’s products. Contrary to other APT groups, the Gamaredon group seems to make no effort in trying to stay under the radar. It also saves to disk the malicious OTM file (Outlook VBA project) that contains a macro, the malicious email attachment and, in some cases, a list of recipients that the emails should be sent to. Office macro injection module – CodeBuilder . We analyzed different variants of malicious modules used by the Gamaredon group to inject malicious macros or remote templates into documents already present on the compromised system. Module updates . Interestingly, some of the custom tools described in Palo Alto Networks’ 2017 blogpost on Gamaredon are still being updated and in use today. C# compiler module . This .NET executable, similar to many other tools used by the Gamaredon group, uses obfuscation techniques such as junk code insertion and string obfuscation. As with many other tools used by the Gamaredon group, they come in four different coding languages: C/C++, C#, batch file and VBScript. Quality of execution . We were able to collect numerous different samples of malicious scripts, executables and documents used by the Gamaredon group throughout their campaigns. Conclusion . Despite the simplicity of most of their tools, the Gamaredon group also is capable of deploying some novelty, such as their Outlook VBA module",
+            "The DLL expects the export named 'Add' to be used when initially loaded. When this function is executed PLAINTEE executes the following command in a new process to add persistence"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1547/001"
+        },
+        {
+          "technique_id": "T1497.002",
+          "name": "User Activity Based Checks",
+          "retrieval_score": 0.108389,
+          "tactics": [
+            "stealth",
+            "discovery"
+          ],
+          "description": "Adversaries may employ various user activity checks to detect and avoid virtualization and analysis environments. This may include changing behaviors based on the results of checks for the presence of artifacts indicative of a virtual machine environment (VME) or sandbox. If the adversary detects a VME, they may alter their malware to disengage from the victim or conceal the core functions of the implant. They may also search for VME artifacts before dropping secondary or additional payloads. Adversaries may use the information learned from [Virtualization/Sandbox Evasion](https://attack.mitre.org/techniques/T1497) during automated discovery to shape follow-on behaviors.(Citation: Deloitte Environment Awareness) Adversaries may search for user activity on the host based on variables such as the speed/frequency of mouse movements and clicks (Citation: Sans Virtual Jan 2016) , browser h...",
+          "known_examples": [
+            "While FIN7 has embedded VBE as OLE objects for over a year, they continue to update their script launching mechanisms. In the current lures, both the malicious DOCX and RTF attempt to convince the user to double-click on the image in the document, as seen in Figure 1. This spawns the hidden embedded malicious LNK file in the document. Overall, this is a more effective phishing tactic since the malicious content is embedded in the document content rather than packaged in the OLE object",
+            "Mouse position: Darkhotel repeatedly checks for the position of the mouse cursor on the screen. If the cursor remains at the center of the desktop, it is unlikely that a real user is using the system. Because of this, most sandboxes periodically move the mouse cursor or perform some other type of interaction with the desktop",
+            "Figure 5 shows the splash image displayed by the Enigma protector prior to executing the malicious payload, which is a wallpaper image available at wallpaperswide.com. The splash screen feature acts as a sandbox evasion technique, as it requires user interaction in the form of clicking the screen before the malicious code runs"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1497/002"
+        },
+        {
+          "technique_id": "T1218.007",
+          "name": "Msiexec",
+          "retrieval_score": 0.104581,
+          "tactics": [
+            "stealth"
+          ],
+          "description": "Adversaries may abuse msiexec.exe to proxy execution of malicious payloads. Msiexec.exe is the command-line utility for the Windows Installer and is thus commonly associated with executing installation packages (.msi).(Citation: Microsoft msiexec) The Msiexec.exe binary may also be digitally signed by Microsoft. Adversaries may abuse msiexec.exe to launch local or network accessible MSI files. Msiexec.exe can also execute DLLs.(Citation: LOLBAS Msiexec)(Citation: TrendMicro Msiexec Feb 2018) Since it may be signed and native on Windows systems, msiexec.exe can be used to bypass application control solutions that do not account for its potential abuse. Msiexec.exe execution may also be elevated to SYSTEM privileges if the <code>AlwaysInstallElevated</code> policy is enabled.(Citation: Microsoft AlwaysInstallElevated 2018)",
+          "known_examples": [
+            "ServHelper’s payload, an NSIS Installer signed with a valid digital signature (further details on the certificate ahead), is downloaded by msiexec.exe to its temporary folder (C:\\Windows\\Installer\\MSI[4-charachter-string].tmp) and executed",
+            "The executables installed by the compiled AutoIt scripts is a backdoor that Molerats has used in many attack campaigns. Based on our research, the Spark backdoor has been used by Molerats since at least early 2017, as it was the main payload in the Operation Parliament campaign reported by Kaspersky",
+            "The captured sample used in this analysis is an MSI file named “view-(AVISO)2020.msi” that is spread through a ZIP archive, just as with the previous variant. In the previous analysis, I showed that this MSI file is parsed and executed automatically by MsiExec.exe when a user double clicks on it in Windows OS"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1218/007"
+        },
+        {
+          "technique_id": "T1140",
+          "name": "Deobfuscate/Decode Files or Information",
+          "retrieval_score": 0.104378,
+          "tactics": [
+            "stealth"
+          ],
+          "description": "Adversaries may use [Obfuscated Files or Information](https://attack.mitre.org/techniques/T1027) to hide artifacts of an intrusion from analysis. They may require separate mechanisms to decode or deobfuscate that information depending on how they intend to use it. Methods for doing that include built-in functionality of malware or by using utilities present on the system. One such example is the use of [certutil](https://attack.mitre.org/software/S0160) to decode a remote access tool portable executable file that has been hidden inside a certificate file.(Citation: Malwarebytes Targeted Attack against Saudi Arabia) Another example is using the Windows <code>copy /b</code> or <code>type</code> command to reassemble binary fragments into a malicious payload.(Citation: Carbon Black Obfuscation Sept 2016)(Citation: Sentinel One Tainted Love 2023) Sometimes a user's action may be required...",
+          "known_examples": [
+            "When receiving HTTP commands, the WellMess server is setup to receive POST requests that contain RC6 encrypted cookies. The server decrypts the cookies using a hardcoded RC6 key and expects the decrypted data to contain no more than four tags",
+            "Timeline . OSX/FruitFly: 1) 2) Remove the malicious launch agent plist file ~/Library/LaunchAgents/com.client.client.plist 3) Remove the malware's persistent perl script &amp; file. Ok, so the attackers are using an open-source multi-stage post-exploitation agent. Unfortunately this file is now inaccessible. The author of the thread announced a RAT dubbed Proton, intended for installation exclusively on MAC OS devices. Finally, the malware modifies the infected host's network settings in order to set up a proxy who's address is (dynamically) specified via a remote proxy auto-configuration (PAC) file. As it's a binary plist file, dump its contents with the plutil utility (using the -p commandline flag): . As the KeepAlive key has been set to 1 (true), the Launch Daemon will be automatically started everytime the infected system is rebooted. MacRansom is the the first 'Ransomware-as-a-Service' for macOS, that aims to encrypt (ransom) all user's files. Then these files will be passed (to a new instance) of the malware, in order to be encrypted. Thus it appears that once encrypted, the files are pretty much gone for good (save for a perhaps a brute force decryption attack). Good news, RansomWhere. Using the neat 'Suspicious Package' application, we can statically examine this script: In short, it persists CPUMeaner as a launch agent via the /Library/LaunchAgents/com.osxext.cpucooler.plist file",
+            "In addition to the aforementioned DOCX file, we found another related DDE enabled document based on an infrastructure overlap with a Zebrocy C2 IP address. This related delivery document was an RTF file that downloaded and installed a payload used to load the open-source Koadic tool. We do not have telemetry on the target or attack vector, but we know the RTF file used DDE to download and execute an executable that loaded Koadic. We believe the actor used a cryptor on the payload, as it obtains a filename and script from within its resources and decodes these resources by multiplying each byte by negative one. The payload then uses the MD5 hash (14331d289e737093994395d3fc412afc) of what appears to be a hardcoded SHA1 hash (B6A75B1EF701710D7AEADE0FE93DE8477F3BD506) as an RC4 key to decrypts the resulting decoded data. The embedded VBScript is retrieved from a resource and decrypted using the same algorithm as discussed above, which results in the following cleartext"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1140"
+        },
+        {
+          "technique_id": "T1218.005",
+          "name": "Mshta",
+          "retrieval_score": 0.101967,
+          "tactics": [
+            "stealth"
+          ],
+          "description": "Adversaries may abuse mshta.exe to proxy execution of malicious .hta files and Javascript or VBScript through a trusted Windows utility. There are several examples of different types of threats leveraging mshta.exe during initial compromise and for execution of code (Citation: Cylance Dust Storm) (Citation: Red Canary HTA Abuse Part Deux) (Citation: FireEye Attacks Leveraging HTA) (Citation: Airbus Security Kovter Analysis) (Citation: FireEye FIN7 April 2017) Mshta.exe is a utility that executes Microsoft HTML Applications (HTA) files. (Citation: Wikipedia HTML Application) HTAs are standalone applications that execute using the same models and technologies of Internet Explorer, but outside of the browser. (Citation: MSDN HTML Applications) Files may be executed by mshta.exe through an inline script: <code>mshta vbscript:Close(Execute(\"GetObject(\"\"script:https[:]//webserver/payload[.]...",
+          "known_examples": [
+            "We attribute this activity to TEMP.Zagros (reported by Palo Alto Networks and Trend Micro as MuddyWater), an Iran-nexus actor that has been active since at least May 2017. This actor has engaged in prolific spear phishing of government and defense entities in Central and Southwest Asia. When successfully executed, the malicious documents install a backdoor we track as POWERSTATS",
+            "When PowerShell is invoked whether via WMI, wscript.exe, or mshta.exe, it executes a one-liner PowerShell code (as outlined above) that reads the encoded text file dropped in ProgramData and then decodes it. The resulting code has multiple layers of obfuscation",
+            "PowerShower, named and previously disclosed by Palo Alto Networks in their blogspot (see above), is a malicious piece of PowerShell designed to receive PowerShell and VBS modules to execute on the local computer. This malware has been used since October 2018 by Cloud Atlas as a validator and now as a second stage"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1218/005"
+        },
+        {
+          "technique_id": "T1137.001",
+          "name": "Office Template Macros",
+          "retrieval_score": 0.101401,
+          "tactics": [
+            "persistence"
+          ],
+          "description": "Adversaries may abuse Microsoft Office templates to obtain persistence on a compromised system. Microsoft Office contains templates that are part of common Office applications and are used to customize styles. The base templates within the application are used each time an application starts. (Citation: Microsoft Change Normal Template) Office Visual Basic for Applications (VBA) macros (Citation: MSDN VBA in Office) can be inserted into the base template and used to execute code when the respective Office application starts in order to obtain persistence. Examples for both Word and Excel have been discovered and published. By default, Word has a Normal.dotm template created that can be modified to include a malicious macro. Excel does not have a template file created by default, but one can be added that will automatically be loaded.(Citation: enigma0x3 normal.dotm)(Citation: Hexacorn...",
+          "known_examples": [
+            "Panda Stealer is deployed through spam emails posing as business quote requests to lure unwary victims into opening malicious Excel files. We have identified two infection chains: in one, an .XLSM attachment contains macros that download a loader (Figure 1). Then, the loader downloads and executes the main stealer.",
+            "The malicious Excel spreadsheet was discovered on Wednesday, Aug. 18, 2021, and it has a last modified date of Tuesday, Aug. 17. The filename had an .xlsb file extension. This file has macros designed to infect a vulnerable Windows host with BazarLoader. Figure 2 shows a screenshot of the Excel file.",
+            "this Excel template was created by a threat actor trying to instill confidence by taking advantage of the DocuSign brand name and image."
+          ],
+          "url": "https://attack.mitre.org/techniques/T1137/001"
+        }
+      ],
+      "llm_provider": "ollama",
+      "raw_llm_result": {
+        "selected_techniques": [],
+        "rejected_candidates": [
+          {
+            "technique_id": "T1566.001",
+            "reason": "Evidence does not mention an email or spearphishing delivery mechanism."
+          },
+          {
+            "technique_id": "T1221",
+            "reason": "No indication of template injection or remote template usage."
+          },
+          {
+            "technique_id": "T1564.003",
+            "reason": "No mention of hidden windows being used."
+          },
+          {
+            "technique_id": "T1564.001",
+            "reason": "The file is described as disguised, not explicitly hidden."
+          },
+          {
+            "technique_id": "T1547.001",
+            "reason": "No evidence of registry run keys or startup folder persistence."
+          },
+          {
+            "technique_id": "T1497.002",
+            "reason": "No user activity or sandbox evasion checks are described."
+          },
+          {
+            "technique_id": "T1218.007",
+            "reason": "No mention of msiexec being used."
+          },
+          {
+            "technique_id": "T1140",
+            "reason": "The evidence describes obfuscation via string concatenation, not deobfuscation or decoding."
+          },
+          {
+            "technique_id": "T1218.005",
+            "reason": "No evidence of mshta usage."
+          },
+          {
+            "technique_id": "T1137.001",
+            "reason": "No indication of Office template macros or persistence; only a macro in a document."
+          }
+        ]
+      },
+      "selected_techniques": [],
+      "rejected_candidates": [
+        {
+          "technique_id": "T1566.001",
+          "reason": "Evidence does not mention an email or spearphishing delivery mechanism."
+        },
+        {
+          "technique_id": "T1221",
+          "reason": "No indication of template injection or remote template usage."
+        },
+        {
+          "technique_id": "T1564.003",
+          "reason": "No mention of hidden windows being used."
+        },
+        {
+          "technique_id": "T1564.001",
+          "reason": "The file is described as disguised, not explicitly hidden."
+        },
+        {
+          "technique_id": "T1547.001",
+          "reason": "No evidence of registry run keys or startup folder persistence."
+        },
+        {
+          "technique_id": "T1497.002",
+          "reason": "No user activity or sandbox evasion checks are described."
+        },
+        {
+          "technique_id": "T1218.007",
+          "reason": "No mention of msiexec being used."
+        },
+        {
+          "technique_id": "T1140",
+          "reason": "The evidence describes obfuscation via string concatenation, not deobfuscation or decoding."
+        },
+        {
+          "technique_id": "T1218.005",
+          "reason": "No evidence of mshta usage."
+        },
+        {
+          "technique_id": "T1137.001",
+          "reason": "No indication of Office template macros or persistence; only a macro in a document."
+        }
+      ],
+      "validation_errors": [],
+      "evidence_metadata": {
+        "source": "section",
+        "section_title": "2.1 Disguising Documents",
+        "chunk_index": 1,
+        "text": "The sample name we captured is Sonam kaur_2, the document name is similar to the sample, the file name below is Sonam Singh's document, which also uses the name of the person as the document name, and Sonam Singh's document is a personal work resume. Unlike the same attack we speculate is that the malicious document we capture only contains macro code inside the open window, and once the user inadvertently clicks to start the macro function, the hidden malicious macro code runs automatically. We also found an account with the same name on Twitter, and in the profile we can see that the status location is in Mumbai and is a wealth consulting firm. The Tweet update is as of July 2021, and while this is consistent with our presumed timing of the action, it is not possible to tell if this tweet is related to the documentation. The macro code disguises itself as an Mdiaz-related program in the ALLUSERSPROFILE directory, reads hidden data from the specified structure of the malicious document and writes it to a file, which shows that APT-C-56 (transparent tribe) uses simple string concatenation technology to disassemble exe characters to avoid static killing by antivirus engines."
+      },
+      "runtime_seconds": 30.08
+    },
+    {
+      "evidence": "The released PE file is a .Net Dropper program. First, determine whether a zip file exists, read the resource section and write the data to the file if it does not exist, delete it and write it again.",
+      "retrieved_candidates": [
+        {
+          "technique_id": "T1006",
+          "name": "Direct Volume Access",
+          "retrieval_score": 0.110665,
+          "tactics": [
+            "stealth"
+          ],
+          "description": "Adversaries may directly access a volume to bypass file access controls and file system monitoring. Windows allows programs to have direct access to logical volumes. Programs with direct access may read and write files directly from the drive by analyzing file system data structures. This technique may bypass Windows file access controls as well as file system monitoring tools.(Citation: Hakobyan 2009) Utilities, such as `NinjaCopy`, exist to perform these actions in PowerShell.(Citation: Github PowerSploit Ninjacopy) Adversaries may also use built-in or third-party utilities (such as `vssadmin`, `wbadmin`, and [esentutl](https://attack.mitre.org/software/S0404)) to create shadow copies or backups of data from system volumes.(Citation: LOLBAS Esentutl)",
+          "known_examples": [],
+          "url": "https://attack.mitre.org/techniques/T1006"
+        },
+        {
+          "technique_id": "T1055.002",
+          "name": "Portable Executable Injection",
+          "retrieval_score": 0.10803,
+          "tactics": [
+            "stealth",
+            "privilege-escalation"
+          ],
+          "description": "Adversaries may inject portable executables (PE) into processes in order to evade process-based defenses as well as possibly elevate privileges. PE injection is a method of executing arbitrary code in the address space of a separate live process. PE injection is commonly performed by copying code (perhaps without a file on disk) into the virtual address space of the target process before invoking it via a new thread. The write can be performed with native Windows API calls such as <code>VirtualAllocEx</code> and <code>WriteProcessMemory</code>, then invoked with <code>CreateRemoteThread</code> or additional code (ex: shellcode). The displacement of the injected code does introduce the additional requirement for functionality to remap memory references. (Citation: Elastic Process Injection July 2017) Running code in the context of another process may allow access to the process's memor...",
+          "known_examples": [
+            "The plugin is designed to migrate the loader to the address space of another process. Injection parameters are set in the Lizar client configuration file. It should be noted that this plugin can be used not only to inject the loader, but also to execute other PE files in the address space of the specified process",
+            "We have rounded up 220 samples of the CARBANAK backdoor and compiled a table that highlights some interesting details that we were able to extract. It should be noted that in most of these cases the backdoor was embedded as a packed payload in another executable or in a weaponized document file of some kind. The MD5 hash is for the original executable file that eventually launches CARBANAK, but the details of each sample were extracted from memory during execution. This data provides us with a unique insight into the operational aspect of CARBANAK and can be downloaded here",
+            "The infection process is rather interesting, as it involves multiple layers of .NET assemblies that will eventually download the NanoCore remote administration tool (RAT) from a remote server and inject it into another process. In some instances, we have also seen the RemcosRAT malware family delivered as the final payload. The infection process not only downloads and executes a payload, but it also downloads and opens a decoy document to lower the recipient's suspicions of the entire process"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1055/002"
+        },
+        {
+          "technique_id": "T1222.002",
+          "name": "Linux and Mac Permissions",
+          "retrieval_score": 0.106139,
+          "tactics": [
+            "defense-impairment"
+          ],
+          "description": "Adversaries may modify file or directory permissions/attributes to evade access control lists (ACLs) and access protected files.(Citation: Hybrid Analysis Icacls1 June 2018)(Citation: Hybrid Analysis Icacls2 May 2018) File and directory permissions are commonly managed by ACLs configured by the file or directory owner, or users with the appropriate permissions. File and directory ACL implementations vary by platform, but generally explicitly designate which users or groups can perform which actions (read, write, execute, etc.). Most Linux and Linux-based platforms provide a standard set of permission groups (user, group, and other) and a standard set of permissions (read, write, and execute) that are applied to each group. While nuances of each platform’s permissions implementation may vary, most of the platforms provide two primary commands used to manipulate file and directory ACLs:...",
+          "known_examples": [
+            "At line 40, that data is piped through the base64 utility for decoding, dropped in a subfolder in the /tmp directory, given executable permissions via chmod, and then launched as the 2nd stage payload",
+            "The touch utility sets the modification and access times of files. If any file does not exist, it is created with default permissions. This makes the utility useful to malware in two common scenarios: for creating an empty file at a given path that is later passed data, and/or for changing the timestamp on a file as a means of evasion, also known as “timestomping",
+            "Uses the chmod +x command to grant executable permissions to the ransomware."
+          ],
+          "url": "https://attack.mitre.org/techniques/T1222/002"
+        },
+        {
+          "technique_id": "T1574.008",
+          "name": "Path Interception by Search Order Hijacking",
+          "retrieval_score": 0.101892,
+          "tactics": [
+            "stealth",
+            "execution"
+          ],
+          "description": "Adversaries may execute their own malicious payloads by hijacking the search order used to load other programs. Because some programs do not call other programs using the full path, adversaries may place their own file in the directory where the calling program is located, causing the operating system to launch their malicious software at the request of the calling program. Search order hijacking occurs when an adversary abuses the order in which Windows searches for programs that are not given a path. Unlike [DLL](https://attack.mitre.org/techniques/T1574/001) search order hijacking, the search order differs depending on the method that is used to execute the program. (Citation: Microsoft CreateProcess) (Citation: Windows NT Command Shell) (Citation: Microsoft WinExec) However, it is common for Windows to search in the directory of the initiating program before searching through the...",
+          "known_examples": [
+            "Empire contains modules that can discover and exploit search order hijacking vulnerabilities."
+          ],
+          "url": "https://attack.mitre.org/techniques/T1574/008"
+        },
+        {
+          "technique_id": "T1070.004",
+          "name": "File Deletion",
+          "retrieval_score": 0.100002,
+          "tactics": [
+            "stealth"
+          ],
+          "description": "Adversaries may delete files left behind by the actions of their intrusion activity. Malware, tools, or other non-native files dropped or created on a system by an adversary (ex: [Ingress Tool Transfer](https://attack.mitre.org/techniques/T1105)) may leave traces to indicate to what was done within a network and how. Removal of these files can occur during an intrusion, or as part of a post-intrusion process to minimize the adversary's footprint. There are tools available from the host operating system to perform cleanup, but adversaries may use other tools as well.(Citation: Microsoft SDelete July 2016) Examples of built-in [Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059) functions include <code>del</code> on Windows, <code>rm</code> or <code>unlink</code> on Linux and macOS, and `rm` on ESXi.",
+          "known_examples": [
+            "Wscript.exe does a number of things: It deletes the original QakBot.vbs and writes four files to disk in %APPDATA% induce.flac, pep.csv, rhythm.tex and senate.m4a. Senate.m4a is deleted after full process execution",
+            "If you use /p, del displays the name of a file and sends the following message: FileName, Delete (Y/N)? To confirm the deletion, press Y. To cancel the deletion and display the next file name (that is, if you specified a group of files), press N. For example, the following command deletes all of the files in the \\Work folder: Copy del \\work - You can use wildcards (* and ?) to delete more than one file at a time. However, to avoid deleting files unintentionally, you should use wildcards cautiously with the del command. For example, if you type the following command: Copy del *.* The del command displays the following prompt: Are you sure (Y/N)? To delete all of the files in the current directory, press Y and then press ENTER. To cancel the deletion, press N and then press ENTER",
+            "In January 2016 we published our analysis of a spearphishing attack against energy companies in Ukraine. That attack probably has a connection to the infamous BlackEnergy attacks in 2015 because the attackers used exactly the same mail server to send spearphishing messages. However, the attacks in January 2016 were different. Instead of using the BlackEnergy malware family, the attackers used a relatively simple open-source backdoor, written in the Python programming language, called GCat. The Python code of the GCat backdoor was obfuscated, then converted into a stand-alone executable using the PyInstaller program"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1070/004"
+        },
+        {
+          "technique_id": "T1083",
+          "name": "File and Directory Discovery",
+          "retrieval_score": 0.097561,
+          "tactics": [
+            "discovery"
+          ],
+          "description": "Adversaries may enumerate files and directories or may search in specific locations of a host or network share for certain information within a file system. Adversaries may use the information from [File and Directory Discovery](https://attack.mitre.org/techniques/T1083) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions. Many command shell utilities can be used to obtain this information. Examples include <code>dir</code>, <code>tree</code>, <code>ls</code>, <code>find</code>, and <code>locate</code>.(Citation: Windows Commands JPCERT) Custom tools may also be used to gather file and directory information and interact with the [Native API](https://attack.mitre.org/techniques/T1106). Adversaries may also leverage a [Network Device CLI](https://attack.mitre.org/techniques/T1059/008) o...",
+          "known_examples": [
+            "For each enumeration, it performs a breadth-first search to wipe the files in the logical drive while ignoring files located in the \"%HOMEDRIVE%\\Windows\" directory. It also only wipes files that have specific file extensions",
+            "CookieMiner reports all the wallet-related file paths to its remote server so it can later upload the files according to the C2 commands. These files usually include private keys of cryptocurrency wallets. If the victims use iTunes to backup files from iPhone to Mac (can be via Wi-Fi), their iPhone text messages (SMSFILE) will also be retrieved by the attackers (Figure 5",
+            "We were able to collect over fifty samples of the tools used by the Magic Hound campaign using the AutoFocus threat intelligence tool. The earliest malware sample we were able to collect had a compile timestamp in May 2016. The samples themselves ranged from IRC bots, an open source Python remote access tool, malicious macros, and others"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1083"
+        },
+        {
+          "technique_id": "T1574.007",
+          "name": "Path Interception by PATH Environment Variable",
+          "retrieval_score": 0.094472,
+          "tactics": [
+            "stealth",
+            "execution"
+          ],
+          "description": "Adversaries may execute their own malicious payloads by hijacking environment variables used to load libraries. The PATH environment variable contains a list of directories (User and System) that the OS searches sequentially through in search of the binary that was called from a script or the command line. Adversaries can place a malicious program in an earlier entry in the list of directories stored in the PATH environment variable, resulting in the operating system executing the malicious binary rather than the legitimate binary when it searches sequentially through that PATH listing. For example, on Windows if an adversary places a malicious program named \"net.exe\" in `C:\\example path`, which by default precedes `C:\\Windows\\system32\\net.exe` in the PATH environment variable, when \"net\" is executed from the command-line the `C:\\example path` will be called instead of the system's le...",
+          "known_examples": [
+            "To install this module, drop the entire PowerSploit folder into one of your module directories. The default PowerShell module paths are listed in the $Env:PSModulePath environment variable"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1574/007"
+        },
+        {
+          "technique_id": "T1070.005",
+          "name": "Network Share Connection Removal",
+          "retrieval_score": 0.091439,
+          "tactics": [
+            "stealth"
+          ],
+          "description": "Adversaries may remove share connections that are no longer useful in order to clean up traces of their operation. Windows shared drive and [SMB/Windows Admin Shares](https://attack.mitre.org/techniques/T1021/002) connections can be removed when no longer needed. [Net](https://attack.mitre.org/software/S0039) is an example utility that can be used to remove network share connections with the <code>net use \\\\system\\share /delete</code> command. (Citation: Technet Net Use)",
+          "known_examples": [
+            "Connects a computer to or disconnects a computer from a shared resource, or displays information about computer connections. The command also controls persistent net connections. Used without parameters, net use retrieves a list of network connections",
+            "After exfiltrating the files, the threat actor used web shell access on the staging server to delete the staged RAR archives and detach their network shares, likely to avoid detection",
+            "InvisiMole can disconnect previously connected remote drives."
+          ],
+          "url": "https://attack.mitre.org/techniques/T1070/005"
+        },
+        {
+          "technique_id": "T1132",
+          "name": "Data Encoding",
+          "retrieval_score": 0.091037,
+          "tactics": [
+            "command-and-control"
+          ],
+          "description": "Adversaries may encode data to make the content of command and control traffic more difficult to detect. Command and control (C2) information can be encoded using a standard data encoding system. Use of data encoding may adhere to existing protocol specifications and includes use of ASCII, Unicode, Base64, MIME, or other binary-to-text and character encoding systems.(Citation: Wikipedia Binary-to-text Encoding) (Citation: Wikipedia Character Encoding) Some data encoding systems may also result in data compression, such as gzip.",
+          "known_examples": [
+            "There are three types of URLs present in the decrypted configuration. The first type of URL listed in the configuration data is used for the plain HTTP (that is, non-Tor) communication with C&amp;C servers. The bot reports to the C&amp;C server using the typical request pattern: for example, the initial checkin to the C&amp;C server is in the form of: cfg_url + “/images/” + encoded_data + (.jpeg||.gif||.bmp",
+            "For both the receiving of C2 commands and exfiltration, Remexi uses the Microsoft Background Intelligent Transfer Service (BITS) mechanism to communicate with the C2 over HTTP",
+            "For Linux Rabbit to establish a connection with the C2 server, it utilizes Tor hidden services to act as contact points to access a Tor gateway. The malware will randomly select one of the hidden services and then a Tor gateway to follow in order to establish an active C2 URL. The payload for the malware is then sent from the C2 server as an encoded URL parameter"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1132"
+        },
+        {
+          "technique_id": "T1030",
+          "name": "Data Transfer Size Limits",
+          "retrieval_score": 0.088598,
+          "tactics": [
+            "exfiltration"
+          ],
+          "description": "An adversary may exfiltrate data in fixed size chunks instead of whole files or limit packet sizes below certain thresholds. This approach may be used to avoid triggering network data transfer threshold alerts.",
+          "known_examples": [
+            "While the decoy in Figure 2 is displayed, the macro will search the document for the delimiter ###$$$ and write the base64 encoded text that follows this delimiter to the file %APPDATA%\\Base.txt. OopsIE Trojan Analysis The OopsIE Trojan delivered in these attacks is packed with SmartAssembly and further obfuscated with ConfuserEx v1.0.0. By using the InternetExplorer application object, all C2 related requests will look as if they came from the legitimate browser and therefore will not contain any anomalous fields within the request, such as custom User-Agents. As seen in the above request, the Trojan will generate a URL for its beacon with the following structure: http://&lt;c2 domain&gt;/chk. hex(Environment.UserName/Environment.MachineName)&gt; The Trojan will issue a request to this URL to check (hence the chk string in the URL) to see if the C2 server has a command for the Trojan to run. The C2 server will respond to the Trojan’s request by echoing the value &lt;hex(Environment.UserName/Environment.MachineName)&gt; if it wishes to provide additional commands. If the C2 server does not respond with the appropriate echoed data, the Trojan will create a file named srvCheckresponded.tmp in the SpecialFolder.CommonApplicationData folder and write nothing to it before exiting. If the C2 server provides the appropriate echoed data in the response, the Trojan attempts to determine what commands the C2 wishes to run by issuing a request to the following URL: http://&lt;c2 domain&gt;/what. hex(Environment.UserName/Environment.MachineName)&gt; After issuing the what command, the Trojan will parse the C2's response for the string Oops, which the Trojan will treat as the C2 making a mistake and will exit. Otherwise, the Server will respond with a command followed by a set of parameters, split up by the delimiter &lt;&gt;: [command]&lt;&gt;[parameters for command in hexadecimal format] The available commands are",
+            "The RDAT sample with the novel EWS C2 channel also had HTTP and DNS tunneling as C2 channels as well, which are very similar to other RDAT samples we collected. The HTTP C2 channel uses HTTP POST requests to transmit data to the C2 server",
+            "Receive a file path from the C2 for a file to read. The target file is read and then split into smaller files named \"&lt;target_filename&gt;.part_&lt;part_number&gt;\" and stored on disk. This capability can be used to break large files of interest into smaller chunks to prepare them for exfiltration"
+          ],
+          "url": "https://attack.mitre.org/techniques/T1030"
+        }
+      ],
+      "llm_provider": "ollama",
+      "raw_llm_result": {
+        "selected_techniques": [
+          {
+            "technique_id": "T1070.004",
+            "name": "File Deletion",
+            "confidence": 0.9,
+            "reason": "The dropper explicitly deletes a file before rewriting it.",
+            "evidence": "delete it and write it again"
+          },
+          {
+            "technique_id": "T1083",
+            "name": "File and Directory Discovery",
+            "confidence": 0.8,
+            "reason": "The dropper checks for the existence of a zip file.",
+            "evidence": "determine whether a zip file exists"
+          }
+        ],
+        "rejected_candidates": [
+          {
+            "technique_id": "T1006",
+            "reason": "No evidence of direct volume access."
+          },
+          {
+            "technique_id": "T1055.002",
+            "reason": "No evidence of PE injection into another process."
+          },
+          {
+            "technique_id": "T1222.002",
+            "reason": "No evidence of permission or ACL modifications."
+          },
+          {
+            "technique_id": "T1574.008",
+            "reason": "No evidence of path interception by search order hijacking."
+          },
+          {
+            "technique_id": "T1574.007",
+            "reason": "No evidence of PATH environment variable hijacking."
+          },
+          {
+            "technique_id": "T1070.005",
+            "reason": "No evidence of network share connection removal."
+          },
+          {
+            "technique_id": "T1132",
+            "reason": "No evidence of data encoding."
+          },
+          {
+            "technique_id": "T1030",
+            "reason": "No evidence of data transfer size limits."
+          }
+        ]
+      },
+      "selected_techniques": [
+        {
+          "technique_id": "T1070.004",
+          "name": "File Deletion",
+          "confidence": 0.9,
+          "reason": "The dropper explicitly deletes a file before rewriting it.",
+          "evidence": "delete it and write it again"
+        },
+        {
+          "technique_id": "T1083",
+          "name": "File and Directory Discovery",
+          "confidence": 0.8,
+          "reason": "The dropper checks for the existence of a zip file.",
+          "evidence": "determine whether a zip file exists"
+        }
+      ],
+      "rejected_candidates": [
+        {
+          "technique_id": "T1006",
+          "reason": "No evidence of direct volume access."
+        },
+        {
+          "technique_id": "T1055.002",
+          "reason": "No evidence of PE injection into another process."
+        },
+        {
+          "technique_id": "T1222.002",
+          "reason": "No evidence of permission or ACL modifications."
+        },
+        {
+          "technique_id": "T1574.008",
+          "reason": "No evidence of path interception by search order hijacking."
+        },
+        {
+          "technique_id": "T1574.007",
+          "reason": "No evidence of PATH environment variable hijacking."
+        },
+        {
+          "technique_id": "T1070.005",
+          "reason": "No evidence of network share connection removal."
+        },
+        {
+          "technique_id": "T1132",
+          "reason": "No evidence of data encoding."
+        },
+        {
+          "technique_id": "T1030",
+          "reason": "No evidence of data transfer size limits."
+        }
+      ],
+      "validation_errors": [],
+      "evidence_metadata": {
+        "source": "section",
+        "section_title": "2.2 Dropper",
+        "chunk_index": 1,
+        "text": "The released PE file is a .Net Dropper program. First, determine whether a zip file exists, read the resource section and write the data to the file if it does not exist, delete it and write it again."
+      },
+      "runtime_seconds": 13.067
+    }
+  ]
+}

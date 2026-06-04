@@ -1,0 +1,15 @@
+{
+  "source_dir": "/home/johnson/sigma_resources/sigma/rules",
+  "record_count": 200,
+  "splits": {
+    "train": 160,
+    "validation": 20,
+    "test": 20
+  },
+  "format": "chat_messages_jsonl",
+  "target": "sigma_rule_draft_json",
+  "notes": [
+    "Assistant output intentionally excludes id, author, and date.",
+    "Post-processing should add deterministic metadata and run Sigma validation."
+  ]
+}

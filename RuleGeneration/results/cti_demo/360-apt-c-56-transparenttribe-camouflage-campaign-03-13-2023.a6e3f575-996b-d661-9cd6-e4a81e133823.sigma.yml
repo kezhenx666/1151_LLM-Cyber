@@ -1,0 +1,43 @@
+title: "Detect MD5 Hash from 360_APT-C-56-TransparentTribe-camouflage-campaign(03-13-2023)"
+id: a6e3f575-996b-d661-9cd6-e4a81e133823
+status: experimental
+description: "Detects md5 indicators extracted from CTI report '360_APT-C-56-TransparentTribe-camouflage-campaign(03-13-2023)'. Generated from Module A IoC JSON and Module B ATT&CK mapping output."
+author: "LLM-driven CTI-to-Detection Pipeline"
+date: 2026/06/04
+tags:
+  - attack.discovery
+  - attack.initial-access
+  - attack.resource-development
+  - attack.stealth
+  - attack.t1070.004
+  - attack.t1083
+  - attack.t1566.001
+  - attack.t1683.001
+logsource:
+  category: file
+detection:
+  selection_md5:
+    hashes|contains:
+      - 0f9f34e3e872e57446ffdcfa90a7b954
+      - 33ea133da15dc060b7709558c97209d2
+      - 35e481dec398f206d0be12bc98ccc17a
+      - 860da5abde63a42b3fbd8202d0cff6d2
+      - 8e642dd589e53347555a7b2596512ed7
+      - ccc33eff063e44fad0fc3e6057b1bcd9
+      - fdb9fe902ef9e9cb893c688c737e4cc7
+  selection_file_hash_md5:
+    file.hash.md5:
+      - 0f9f34e3e872e57446ffdcfa90a7b954
+      - 33ea133da15dc060b7709558c97209d2
+      - 35e481dec398f206d0be12bc98ccc17a
+      - 860da5abde63a42b3fbd8202d0cff6d2
+      - 8e642dd589e53347555a7b2596512ed7
+      - ccc33eff063e44fad0fc3e6057b1bcd9
+      - fdb9fe902ef9e9cb893c688c737e4cc7
+  condition: "selection_md5 or selection_file_hash_md5"
+fields:
+  - hashes/file.hash.md5
+falsepositives:
+  - "Indicators may appear in threat research, sandbox, or internal security testing traffic."
+  - "Validate against local asset ownership and approved threat intelligence feeds."
+level: high

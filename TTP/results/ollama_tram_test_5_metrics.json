@@ -1,0 +1,15 @@
+{
+  "provider": "ollama",
+  "api_base": "http://192.168.28.151:11434",
+  "model": "gpt-oss:20b",
+  "top_k": 10,
+  "input_count": 5,
+  "metrics": {
+    "evaluated_samples": 5,
+    "sample_exact_hit_rate": 0.6,
+    "sample_family_hit_rate": 0.8,
+    "avg_selected_per_sample": 1.4,
+    "avg_gold_per_sample": 1.4
+  },
+  "note": "Small smoke-test result only; use a larger split for final evaluation."
+}

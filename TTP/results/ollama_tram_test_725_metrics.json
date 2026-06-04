@@ -1,0 +1,13 @@
+{
+  "provider": "ollama",
+  "top_k": 10,
+  "input_count": 725,
+  "metrics": {
+    "evaluated_samples": 725,
+    "sample_exact_hit_rate": 0.4483,
+    "sample_family_hit_rate": 0.5876,
+    "avg_selected_per_sample": 1.3959,
+    "avg_gold_per_sample": 1.1738
+  },
+  "note": "Metrics are meaningful only when provider calls an LLM. prompt-only mode intentionally has no selected techniques."
+}

@@ -1,0 +1,31 @@
+title: "Detect IP Infrastructure from 360_APT-C-56-TransparentTribe-camouflage-campaign(03-13-2023)"
+id: 0f653f0b-135a-ac53-922e-874cb7c3a9db
+status: experimental
+description: "Detects ipv4 indicators extracted from CTI report '360_APT-C-56-TransparentTribe-camouflage-campaign(03-13-2023)'. Generated from Module A IoC JSON and Module B ATT&CK mapping output."
+author: "LLM-driven CTI-to-Detection Pipeline"
+date: 2026/06/04
+tags:
+  - attack.discovery
+  - attack.initial-access
+  - attack.resource-development
+  - attack.stealth
+  - attack.t1070.004
+  - attack.t1083
+  - attack.t1566.001
+  - attack.t1683.001
+logsource:
+  category: network_connection
+detection:
+  selection_dst_ip:
+    DestinationIp:
+      - 23.254.119.234
+  selection_dst_ip_alt:
+    dst_ip:
+      - 23.254.119.234
+  condition: "selection_dst_ip or selection_dst_ip_alt"
+fields:
+  - DestinationIp/dst_ip
+falsepositives:
+  - "Indicators may appear in threat research, sandbox, or internal security testing traffic."
+  - "Validate against local asset ownership and approved threat intelligence feeds."
+level: high

@@ -1,0 +1,29 @@
+{
+  "data_dir": "RuleGeneration/fine_tune_data_full",
+  "file_count": 3,
+  "record_count": 3110,
+  "valid": true,
+  "results": [
+    {
+      "path": "RuleGeneration/fine_tune_data_full/sigma_generation_test.jsonl",
+      "records": 311,
+      "valid": true,
+      "error_count": 0,
+      "errors": []
+    },
+    {
+      "path": "RuleGeneration/fine_tune_data_full/sigma_generation_train.jsonl",
+      "records": 2488,
+      "valid": true,
+      "error_count": 0,
+      "errors": []
+    },
+    {
+      "path": "RuleGeneration/fine_tune_data_full/sigma_generation_validation.jsonl",
+      "records": 311,
+      "valid": true,
+      "error_count": 0,
+      "errors": []
+    }
+  ]
+}

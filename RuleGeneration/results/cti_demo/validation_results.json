@@ -1,0 +1,48 @@
+{
+  "rules_dir": "/home/johnson/sigma_rule_outputs_360",
+  "rule_count": 2,
+  "valid_count": 2,
+  "invalid_count": 0,
+  "results": [
+    {
+      "path": "/home/johnson/sigma_rule_outputs_360/360-apt-c-56-transparenttribe-camouflage-campaign-03-13-2023.0f653f0b-135a-ac53-922e-874cb7c3a9db.sigma.yml",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "top_level_keys": [
+        "author",
+        "date",
+        "description",
+        "detection",
+        "falsepositives",
+        "fields",
+        "id",
+        "level",
+        "logsource",
+        "status",
+        "tags",
+        "title"
+      ]
+    },
+    {
+      "path": "/home/johnson/sigma_rule_outputs_360/360-apt-c-56-transparenttribe-camouflage-campaign-03-13-2023.a6e3f575-996b-d661-9cd6-e4a81e133823.sigma.yml",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "top_level_keys": [
+        "author",
+        "date",
+        "description",
+        "detection",
+        "falsepositives",
+        "fields",
+        "id",
+        "level",
+        "logsource",
+        "status",
+        "tags",
+        "title"
+      ]
+    }
+  ]
+}
