@@ -1,0 +1,19 @@
+[
+  {
+    "input": "/home/johnson/360_APT-C-56-TransparentTribe-camouflage-campaign(03-13-2023).iocs.json",
+    "output": "/home/johnson/ttp_mapping_cti_outputs_ollama/360_APT-C-56-TransparentTribe-camouflage-campaign(03-13-2023).iocs.attack.json",
+    "report_id": "360_APT-C-56-TransparentTribe-camouflage-campaign(03-13-2023)",
+    "report_title": "360_APT-C-56-TransparentTribe-camouflage-campaign(03-13-2023)",
+    "mapping_summary": {
+      "evidence_count": 5,
+      "technique_count": 4,
+      "tactic_counts": {
+        "discovery": 1,
+        "initial-access": 1,
+        "resource-development": 1,
+        "stealth": 1
+      },
+      "validation_error_count": 0
+    }
+  }
+]

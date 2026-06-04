@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+.DS_Store
+.idea/
+.vscode/
+
+.env
+.venv/
+venv/
+env/
+
+*.log
+run_webui.log
+
+# Large/generated local outputs are usually stored outside the repository.
+aptnotes_2023_2024_ioc_json*/
+ttp_mapping_*_outputs*/
+sigma_rule_outputs*/
+model_eval/
